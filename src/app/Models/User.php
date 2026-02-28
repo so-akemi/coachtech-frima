@@ -21,6 +21,11 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'postal_code',   // 追加
+        'address',       // 追加
+        'building',      // 追加
+        'avatar_path',   // 追加
+        'introduction',  // 追加
     ];
 
     /**
