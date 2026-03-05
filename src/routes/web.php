@@ -17,3 +17,7 @@ use App\Http\Controllers\ItemController;
 */
 
 Route::get('/', [ItemController::class, 'index']);
+Route::get('/item/{item_id}', [ItemController::class, 'show'])->name('item.show');
+Route::get('/item/purchase/{item_id}', [ItemController::class, 'purchase'])->name('item.purchase');
+Route::get('/purchase/address/{item_id}', [ItemController::class, 'editAddress'])->name('address.edit');
+Route::post('/purchase/address/{item_id}', [ItemController::class, 'updateAddress'])->name('address.update');

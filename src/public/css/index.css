@@ -1,0 +1,58 @@
+.tab-menu {
+    border-bottom: 1px solid #ccc;
+    margin-bottom: 40px;
+    padding-left: 40px;
+    display: flex;
+    gap: 40px;
+}
+
+.tab-item {
+    padding: 15px 0;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 14px;
+    text-decoration: none;
+    color: #000;
+}
+
+.tab-item.active {
+    color: #ff0000;
+    border-bottom: 2px solid #ff0000;
+    margin-bottom: -1px;
+    /* 親のborderと重ねる */
+}
+
+/* 商品グリッド */
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    /* 4列固定 */
+    gap: 40px;
+    padding: 0 40px;
+}
+
+.product-card {
+    text-decoration: none;
+    color: #000;
+}
+
+.product-image-container {
+    aspect-ratio: 1 / 1;
+    /* 正方形を維持 */
+    background-color: #d1d1d1;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.product-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.product-name {
+    font-size: 14px;
+}

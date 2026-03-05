@@ -1,0 +1,82 @@
+.header {
+    background-color: #000000;
+    color: #ffffff;
+    height: 64px;
+    /* 必要に応じて調整 */
+    display: flex;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 1000
+}
+
+.header__inner {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    align-items: center;
+}
+
+.header-logo {
+    height: 40px;
+    /* 高さを指定 */
+    width: auto;
+    /* 横幅は自動（比率維持） */
+    object-fit: contain;
+    /* 枠内に収める */
+    display: block;
+}
+
+@media (max-width: 640px) {
+    .header-logo {
+        height: 32px;
+    }
+}
+
+.header-center {
+    flex: 1;
+    margin: 0 40px;
+    /* ロゴとメニューとの間隔 */
+}
+
+.search-input {
+    width: 100%;
+    height: 36px;
+    padding: 0 15px;
+    border-radius: 4px;
+    border: none;
+    font-size: 14px;
+    color: #333;
+}
+
+/* 右側ナビゲーション */
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.nav-item {
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+/* 出品ボタン */
+.sell-button {
+    background-color: #ffffff;
+    color: #000000;
+    padding: 6px 16px;
+    border-radius: 4px;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 14px;
+    transition: opacity 0.2s;
+}
+
+.sell-button:hover {
+    opacity: 0.8;
+}

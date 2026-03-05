@@ -1,0 +1,97 @@
+/* 全体のレイアウト */
+.purchase-container {
+    display: flex;
+    max-width: 1000px;
+    margin: 40px auto;
+    gap: 50px;
+    padding: 0 20px;
+}
+
+/* 左側（商品情報・支払い方法・配送先） */
+.purchase-left {
+    flex: 1.5;
+}
+
+.item-confirm,
+.payment-method,
+.shipping-address {
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 20px;
+    margin-bottom: 30px;
+}
+
+.item-info {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.confirm-image {
+    width: 150px;
+    height: 150px;
+    background-color: #d1d1d1;
+    object-fit: cover;
+}
+
+.confirm-name {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.confirm-price {
+    font-size: 18px;
+    margin-top: 10px;
+}
+
+/* 共通の見出しと変更リンク */
+.payment-method,
+.address-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.change-link {
+    color: #007bff;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+/* 右側（決済ボックス） */
+.purchase-right {
+    flex: 1;
+}
+
+.summary-box {
+    border: 1px solid #ddd;
+    padding: 20px;
+    border-radius: 4px;
+}
+
+.summary-table {
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.summary-table th,
+.summary-table td {
+    padding: 10px 0;
+    text-align: left;
+}
+
+.summary-table td {
+    text-align: right;
+}
+
+/* 購入確定ボタン */
+.buy-submit-button {
+    width: 100%;
+    background-color: #ff6b6b;
+    color: white;
+    border: none;
+    padding: 15px;
+    font-weight: bold;
+    font-size: 16px;
+    border-radius: 4px;
+    cursor: pointer;
+}
