@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ItemController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SellController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,6 +20,17 @@ use App\Http\Controllers\ItemController;
 
 Route::get('/', [ItemController::class, 'index']);
 Route::get('/item/{item_id}', [ItemController::class, 'show'])->name('item.show');
-Route::get('/item/purchase/{item_id}', [ItemController::class, 'purchase'])->name('item.purchase');
-Route::get('/purchase/address/{item_id}', [ItemController::class, 'editAddress'])->name('address.edit');
-Route::post('/purchase/address/{item_id}', [ItemController::class, 'updateAddress'])->name('address.update');
+
+
+Route::middleware('auth')->group(function () {
+    Route::get('/item/purchase/{item_id}', [ItemController::class, 'purchase'])->name('item.purchase');
+   Route::get('/purchase/address/{item_id}', [ItemController::class, 'editAddress'])->name('address.edit');
+   Route::post('/purchase/address/{item_id}', [ItemController::class, 'updateAddress'])->name('address.update');
+   Route::post('/purchase/{item_id}', [ItemController::class, 'buy'])->name('item.buy');
+   // プロフィール設定画面（初回登録時・編集時）
+   Route::get('/mypage/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+   // プロフィール更新処理
+   Route::post('/mypage/profile', [ProfileController::class, 'update'])->name('profile.update');
+   Route::get('/sell', [SellController::class, 'create'])->name('item.create');
+   Route::post('/sell', [SellController::class, 'store'])->name('item.store');
+});

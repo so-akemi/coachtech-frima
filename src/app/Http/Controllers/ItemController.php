@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Item;
+use App\Models\Order;
+use App\Models\Category;
+use Illuminate\Support\Facades\Auth;
 
 class ItemController extends Controller
 {
@@ -15,15 +18,23 @@ class ItemController extends Controller
     }
 
     public function show($item_id) {
-        $item = Item::findOrFail($item_id);
+        $item = Item::with('categories')->findOrFail($item_id);
         return view('items.show', compact('item'));
     }
     
     public function purchase($item_id) {
-        $item = Item::findOrFail($item_id);
-        // 購入処理をここに実装（例: 在庫の減少、購入履歴の保存など）
-        // ここでは簡単に購入完了のメッセージを表示するだけにします
-        return view('purchase.index', compact('item'));
+        $item = Item::with('categories')->findOrFail($item_id);
+
+        // 1. セッションに一時保存された住所があるか確認
+        // なければ、ログインユーザーのデフォルト住所を使う
+        $address = session("address_for_item_{$item_id}") ?? [
+          'postal_code' => auth()->user()->postal_code ?? '', // ユーザーの郵便番号、なければ空文字
+          'address'     => auth()->user()->address ?? '', // ユーザーの住所、なければ空文字
+          'building'    => auth()->user()->building ?? '', // ユーザーの建物名、なければ空文字
+        ];
+
+        // 2. viewに $item と $address の両方を渡す
+        return view('purchase.index', compact('item', 'address'));
     }
 
     public function editAddress($item_id) {
@@ -32,9 +43,40 @@ class ItemController extends Controller
     }
 
     public function updateAddress(Request $request, $item_id) {
-        $item = Item::findOrFail($item_id);
+        // 入力値をセッションに保存（'address_item_1' のように商品IDをキーにすると確実）
+        session(["address_for_item_{$item_id}" => $request->only(['postal_code', 'address', 'building'])]);
         // ここで住所の更新処理を実装（例: ユーザーの住所情報を保存するなど）
         // 一旦、画面を戻す処理だけ書きます
         return redirect()->route('item.purchase', ['item_id' => $item_id]);
+    }
+
+    public function buy(Request $request, $item_id)
+    {
+        // セッションに保存された住所を取得、なければUserのデフォルト住所を使う
+        $address = session("address_for_item_{$item_id}") ?? [
+        'postal_code' => auth()->user()->postal_code,
+        'address'     => auth()->user()->address,
+        'building'    => auth()->user()->building,
+        ];
+
+        // Orderテーブルにレコードを作成（これで紐づけ完了！）
+        Order::create([
+        'user_id' => auth()->id(),
+        'item_id' => $item_id,
+        'postal_code' => $address['postal_code'],
+        'address' => $address['address'],
+        'building' => $address['building'],
+        ]);
+
+    // 3. 使い終わった一時住所セッションを消去する
+        session()->forget("address_for_item_{$item_id}");
+
+        return view('purchase.success');
+    }
+
+    public function create()
+    {
+    $categories = Category::all(); // DBから全カテゴリー取得
+    return view('items.create', compact('categories'));
     }
 }

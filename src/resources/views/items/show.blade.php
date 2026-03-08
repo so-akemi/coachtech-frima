@@ -2,7 +2,7 @@
 
 @section('css')
     <link rel="stylesheet" href="{{ asset('css/show.css') }}">
-    @endsection
+@endsection
 
 @section('content')
 <div class="item-detail-container">
@@ -48,8 +48,9 @@
                 <div class="info-row">
                     <span class="info-label">カテゴリー</span>
                     <div class="category-tags">
-                        <span class="tag">洋服</span>
-                        <span class="tag">メンズ</span>
+                        @foreach($item->categories as $category)
+                          <span class="category-tag">{{ $category->content }}</span>
+                        @endforeach
                     </div>
                 </div>
                 <div class="info-row">

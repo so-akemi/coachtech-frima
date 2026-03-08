@@ -26,6 +26,17 @@ class Item extends Model
         return $this->belongsTo(User::class);
     }
 
+    // 商品・注文は一つの注文に属する
+    public function orders()
+    {
+        return $this->hasOne(Order::class);
+    }
+
+    public function categories()
+    {
+    return $this->belongsToMany(Category::class, 'category_item');
+    }
+
     protected $casts = [
         'price' => 'integer', // priceを整数として扱う
     ];

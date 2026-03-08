@@ -125,6 +125,16 @@ a.buy-button-link {
     color: #666;
 }
 
+.category-tag {
+    display: inline-block;
+    background-color: #e0e0e0;
+    color: #4b4b4b;
+    padding: 5px 15px;
+    border-radius: 20px;
+    margin-right: 10px;
+    font-size: 14px;
+}
+
 /* コメント欄 */
 .comment-user {
     display: flex;

@@ -1,0 +1,23 @@
+/* チェックボックス自体は見えなくする */
+.category-label input {
+    display: none;
+}
+
+/* タグの見た目 */
+.category-tag {
+    display: inline-block;
+    padding: 5px 15px;
+    border: 1px solid #ff4d4d;
+    /* 赤い枠線 */
+    color: #ff4d4d;
+    border-radius: 20px;
+    cursor: pointer;
+    margin: 5px;
+    transition: 0.3s;
+}
+
+/* チェックされた時の見た目（背景を赤くする） */
+.category-label input:checked+.category-tag {
+    background-color: #ff4d4d;
+    color: white;
+}
