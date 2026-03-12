@@ -1,0 +1,194 @@
+/* create.css */
+
+/* コンテナ全体のレイアウト */
+.create-form__content {
+    max-width: 700px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+.create-form__heading h1 {
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.form__group {
+    margin-bottom: 30px;
+}
+
+.form__label--item {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 15px;
+    font-size: 16px;
+}
+
+/* --- 画像のような点線枠のアップロードエリア --- */
+.form__image-upload-wrapper {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    /* 正方形か長方形か、お好みで調整 */
+    background-color: #ffffff;
+    border: 2px dashed #d1d1d1;
+    /* グレーの点線枠 */
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+}
+
+/* 画像のような赤い枠線と赤文字のボタン風スタイル */
+.form__image-upload-button {
+    display: inline-block;
+    padding: 8px 18px;
+    border: 1px solid #ff4d4b;
+    /* 赤い枠線 */
+    color: #ff4d4b;
+    /* 赤い文字 */
+    font-weight: bold;
+    border-radius: 20px;
+    /* 画像のように丸く */
+    font-size: 14px;
+    cursor: pointer;
+    background-color: #ffffff;
+}
+
+.form__image-upload-button:hover {
+    background-color: rgba(255, 77, 75, 0.1);
+    /* ホバー時にうっすら赤く */
+}
+
+/* 実際のファイル入力を隠す（デザイン優先のため） */
+.form__input--file-hidden {
+    display: none;
+}
+
+/* セクションの区切りタイトル（商品の詳細、商品名と説明） */
+.form__group-section-title {
+    margin-top: 40px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #333;
+    /* 下線で区切り */
+    padding-bottom: 8px;
+}
+
+.form__group-section-title h2 {
+    font-size: 18px;
+    font-weight: bold;
+    margin: 0;
+    color: #333;
+}
+
+/* 各入力項目のグループ */
+.form__group {
+    margin-bottom: 25px;
+}
+
+.form__label--item {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 10px;
+    font-size: 16px;
+}
+
+/* 入力欄：四角い枠線の共通スタイル */
+.form__input--text input,
+.form__input--select select,
+.form__input--textarea textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #d1d1d1;
+    border-radius: 4px;
+    font-size: 16px;
+    box-sizing: border-box;
+    outline: none;
+}
+
+/* 商品の説明（テキストエリア）の高さ */
+.form__input--textarea textarea {
+    height: 150px;
+    resize: vertical;
+}
+
+/* 価格入力欄（¥マーク付き） */
+.form__input--price {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.form__currency {
+    position: absolute;
+    left: 12px;
+    font-size: 16px;
+    color: #333;
+}
+
+.form__input--price input {
+    width: 100%;
+    padding: 12px 12px 12px 30px;
+    /* 左側に¥マーク分の余白 */
+    border: 1px solid #d1d1d1;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+/* ファイル選択ボタンの装飾 */
+.form__input--file-box {
+    margin-top: 5px;
+}
+
+/* エラーメッセージ */
+.form__error {
+    color: #ff4d4b;
+    font-size: 12px;
+    margin-top: 5px;
+}
+
+/* 出品ボタン */
+.form__button-submit {
+    width: 100%;
+    background-color: #ff4d4b;
+    color: white;
+    border: none;
+    padding: 15px;
+    font-size: 18px;
+    font-weight: bold;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 40px;
+    transition: opacity 0.3s;
+}
+
+.form__button-submit:hover {
+    opacity: 0.8;
+}
+
+/* カテゴリー選択用（includeされているコンポーネント用） */
+.category-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.category-label input {
+    display: none;
+}
+
+.category-tag {
+    display: inline-block;
+    padding: 6px 20px;
+    border: 1px solid #ff4d4b;
+    color: #ff4d4b;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.category-label input:checked+.category-tag {
+    background-color: #ff4d4b;
+    color: white;
+}

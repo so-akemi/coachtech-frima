@@ -1,23 +1,37 @@
-/* チェックボックス自体は見えなくする */
-.category-label input {
+/* カテゴリータグの親コンテナ */
+.category-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-top: 10px;
+}
+
+/* チェックボックスを隠す */
+.category-label input[type="checkbox"] {
     display: none;
 }
 
-/* タグの見た目 */
+/* タグの初期状態：赤枠・赤文字 */
 .category-tag {
     display: inline-block;
-    padding: 5px 15px;
-    border: 1px solid #ff4d4d;
-    /* 赤い枠線 */
-    color: #ff4d4d;
+    padding: 6px 18px;
+    border: 1px solid #ff4d4b;
+    color: #ff4d4b;
     border-radius: 20px;
     cursor: pointer;
-    margin: 5px;
-    transition: 0.3s;
+    font-size: 14px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    user-select: none;
 }
 
-/* チェックされた時の見た目（背景を赤くする） */
-.category-label input:checked+.category-tag {
-    background-color: #ff4d4d;
+/* チェックされた時の状態：背景が赤・文字が白 */
+.category-label input[type="checkbox"]:checked+.category-tag {
+    background-color: #ff4d4b;
     color: white;
+}
+
+/* ホバー時の微調整 */
+.category-tag:hover {
+    background-color: rgba(255, 77, 75, 0.1);
 }

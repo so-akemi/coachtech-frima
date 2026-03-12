@@ -4,9 +4,34 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Item;
 
 class ProfileController extends Controller
 {
+    public function index(Request $request)
+    {
+        $user = Auth::user();
+
+        // 現在のタブを取得（デフォルトは 'sell'）
+        $currentPage = $request->query('page', 'sell');
+
+        // 1. 最初になんでもいいので「空のコレクション」として初期化しておく
+        $sellItems = collect();
+        $buyItems = collect();
+
+        // 2. 条件に応じて中身を上書きする
+        if ($currentPage === 'buy') {
+        // 購入した商品の取得（まだ機能がない場合は空のままでOK）
+        // $buyItems = ... 
+        } else {
+        // 出品した商品の取得
+        $sellItems = \App\Models\Item::where('user_id', $user->id)->get();
+        }
+
+        // 3. ここで compact に渡す。初期化してあるので必ず変数が存在する。
+        return view('profile.index', compact('user', 'sellItems', 'buyItems', 'currentPage'));
+    }
+
     /**
      * プロフィール設定画面（編集画面）の表示
      */

@@ -1,45 +1,44 @@
-.address-container {
-    max-width: 600px;
-    margin: 60px auto;
+/* address.css */
+.address__content {
+    max-width: 450px;
+    /* 画像のように中央に細長く配置 */
+    margin: 80px auto;
     padding: 0 20px;
 }
 
-.page-title {
-    text-align: center;
+.address__heading h2 {
     font-size: 24px;
-    margin-bottom: 40px;
-}
-
-.address-form {
-    display: flex;
-    flex-direction: column;
-    gap: 25px;
-}
-
-.form-group {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-}
-
-.form-group label {
     font-weight: bold;
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+.form__group {
+    margin-bottom: 30px;
+}
+
+.form__label--item {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 10px;
     font-size: 16px;
 }
 
-.form-input {
+/* 1枚目画像のような四角い入力枠 */
+.form__input--text input {
     width: 100%;
     padding: 12px;
-    border: 1px solid #ccc;
+    border: 1px solid #d1d1d1;
     border-radius: 4px;
     font-size: 16px;
     box-sizing: border-box;
+    outline: none;
 }
 
-/* 更新ボタン（購入ボタンと色を合わせる） */
-.update-button {
+/* 1枚目画像のようなパキッとした赤ボタン */
+.form__button-submit {
     width: 100%;
-    background-color: #ff6b6b;
+    background-color: #ff4d4b;
     color: white;
     border: none;
     padding: 15px;
@@ -47,9 +46,9 @@
     font-weight: bold;
     border-radius: 4px;
     cursor: pointer;
-    margin-top: 20px;
+    margin-top: 40px;
 }
 
-.update-button:hover {
+.form__button-submit:hover {
     opacity: 0.8;
 }

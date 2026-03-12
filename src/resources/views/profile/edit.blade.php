@@ -5,39 +5,69 @@
 @endsection
 
 @section('content')
-<div class="profile-edit-container">
-    <h2>プロフィール設定</h2>
+<div class="profile-edit__content">
+    <div class="profile-edit__heading">
+        <h2>プロフィール設定</h2>
+    </div>
     
-    <form action="{{ route('profile.update') }}" method="POST">
+    <form action="{{ route('profile.update') }}" method="POST" class="form">
         @csrf
-        {{-- ユーザー名 --}}
-        <div class="form-group">
-            <label>ユーザー名</label>
-            <input type="text" name="name" value="{{ old('name', $user->name) }}">
-            @error('name') <p class="error">{{ $message }}</p> @enderror
+        <div class="form__group">
+            <div class="form__group-title">
+                <span class="form__label--item">ユーザー名</span>
+            </div>
+            <div class="form__group-content">
+                <div class="form__input--text">
+                    <input type="text" name="name" value="{{ old('name', $user->name) }}">
+                </div>
+                <div class="form__error">
+                    @error('name') {{ $message }} @enderror
+                </div>
+            </div>
         </div>
 
-        {{-- 郵便番号 --}}
-        <div class="form-group">
-            <label>郵便番号</label>
-            <input type="text" name="postal_code" value="{{ old('postal_code', $user->postal_code) }}">
-            @error('postal_code') <p class="error">{{ $message }}</p> @enderror
+        <div class="form__group">
+            <div class="form__group-title">
+                <span class="form__label--item">郵便番号</span>
+            </div>
+            <div class="form__group-content">
+                <div class="form__input--text">
+                    <input type="text" name="postal_code" value="{{ old('postal_code', $user->postal_code) }}">
+                </div>
+                <div class="form__error">
+                    @error('postal_code') {{ $message }} @enderror
+                </div>
+            </div>
         </div>
 
-        {{-- 住所 --}}
-        <div class="form-group">
-            <label>住所</label>
-            <input type="text" name="address" value="{{ old('address', $user->address) }}">
-            @error('address') <p class="error">{{ $message }}</p> @enderror
+        <div class="form__group">
+            <div class="form__group-title">
+                <span class="form__label--item">住所</span>
+            </div>
+            <div class="form__group-content">
+                <div class="form__input--text">
+                    <input type="text" name="address" value="{{ old('address', $user->address) }}">
+                </div>
+                <div class="form__error">
+                    @error('address') {{ $message }} @enderror
+                </div>
+            </div>
         </div>
 
-        {{-- 建物名 --}}
-        <div class="form-group">
-            <label>建物名</label>
-            <input type="text" name="building" value="{{ old('building', $user->building) }}">
+        <div class="form__group">
+            <div class="form__group-title">
+                <span class="form__label--item">建物名</span>
+            </div>
+            <div class="form__group-content">
+                <div class="form__input--text">
+                    <input type="text" name="building" value="{{ old('building', $user->building) }}">
+                </div>
+            </div>
         </div>
 
-        <button type="submit" class="submit-button">更新する</button>
+        <div class="form__button">
+            <button type="submit" class="form__button-submit">更新する</button>
+        </div>
     </form>
 </div>
 @endsection

@@ -29,7 +29,7 @@
               @csrf
               <button type="submit" class="nav-item" style="background: none; border: none; cursor: pointer;">ログアウト</button>
             </form>
-            <a href="#" class="nav-item">マイページ</a>
+            <a href="{{ route('profile.index') }}" class="nav-item">マイページ</a>
             @endauth
 
             @guest

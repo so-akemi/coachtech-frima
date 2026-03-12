@@ -10,9 +10,18 @@ use Illuminate\Support\Facades\Auth;
 
 class ItemController extends Controller
 {
-    public function index() {
+    public function index(Request $request) {
+        $tab = $request->get('tab');
+        if ($tab === 'mylist') {
+        // ログインユーザーがお気に入り登録している商品のみ取得
+        // ※お気に入り機能（Favoriteモデル等）が実装されている前提です
+        $items = auth()->check() 
+            ? auth()->user()->favoriteItems()->get() 
+            : collect();
+        } else {
+        // 全商品（おすすめ）を取得
         $items = Item::all();
-        //dd($items); // ここでアイテムの内容を確認
+        }
 
         return view('items.index', compact('items'));
     }
@@ -78,5 +87,20 @@ class ItemController extends Controller
     {
     $categories = Category::all(); // DBから全カテゴリー取得
     return view('items.create', compact('categories'));
+    }
+
+    public function toggleFavorite($item_id)
+    {
+        $user = Auth::user();
+        
+        // ログインしていない場合はログイン画面へ
+        if (!$user) {
+            return redirect()->route('login');
+        }
+
+        // favoriteItems()リレーションを使って切り替え
+        $user->favoriteItems()->toggle($item_id);
+
+        return back();
     }
 }

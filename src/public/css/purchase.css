@@ -1,129 +1,112 @@
-/* 全体のレイアウト設定 */
-.purchase-container {
+/* purchase.css */
+.purchase__container {
     display: flex;
     justify-content: space-between;
     max-width: 1100px;
     margin: 40px auto;
     padding: 0 20px;
     gap: 80px;
-    /* 左右の余白を広めに取る */
 }
 
-/* 左側セクション（商品・支払い・住所） */
-.purchase-left {
+/* 左側：商品・支払い・住所 */
+.purchase__left {
     flex: 1.5;
 }
 
-/* 各セクションの区切り線 */
-.item-confirm,
-.payment-method-section,
-.shipping-address {
+.purchase__item-confirm,
+.purchase__section {
     border-bottom: 1px solid #ddd;
     padding: 30px 0;
 }
 
-/* 商品情報エリア */
-.item-info {
+.purchase__item-info {
     display: flex;
     align-items: center;
     gap: 40px;
 }
 
-.confirm-image {
+.purchase__item-image img {
     width: 180px;
     height: 180px;
     object-fit: cover;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-.confirm-name {
+.purchase__item-name {
     font-size: 24px;
     font-weight: bold;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
 }
 
-.confirm-price {
+.purchase__item-price {
     font-size: 20px;
 }
 
-/* 見出しのスタイル */
-h3 {
+.purchase__section-title h3 {
     font-size: 18px;
     font-weight: bold;
     margin-bottom: 20px;
     color: #333;
 }
 
-/* 支払い方法のセレクトボックス */
-.payment-select-wrapper {
-    width: 100%;
-}
-
-.payment-input {
+/* 支払い方法セレクトボックス */
+.form__input--select select {
     width: 100%;
     padding: 12px;
-    border: 1px solid #ccc;
+    border: 1px solid #d1d1d1;
     border-radius: 4px;
     font-size: 16px;
     background-color: #fff;
+    outline: none;
 }
 
-/* 配送先ヘッダー */
-.address-header {
+.purchase__address-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 15px;
 }
 
-.change-link {
+.purchase__change-link {
     color: #007bff;
     text-decoration: none;
     font-size: 14px;
 }
 
-.address-content p {
-    margin-bottom: 5px;
-    line-height: 1.6;
-}
-
-/* 右側セクション（決済ボックス） */
-.purchase-right {
+/* 右側：決済ボックス */
+.purchase__right {
     flex: 1;
     min-width: 350px;
 }
 
-.summary-box {
+.purchase__summary-box {
     border: 1px solid #ddd;
     padding: 30px;
     position: sticky;
-    /* スクロールしてもついてくる設定 */
     top: 20px;
 }
 
-.summary-table {
+.purchase__summary-table {
     width: 100%;
     margin-bottom: 30px;
     border-collapse: collapse;
 }
 
-.summary-table th,
-.summary-table td {
+.purchase__summary-table th,
+.purchase__summary-table td {
     padding: 15px 0;
     text-align: left;
     font-size: 16px;
 }
 
-.summary-table td {
+.purchase__summary-table td {
     text-align: right;
     font-weight: bold;
 }
 
-/* 購入確定ボタン */
-.buy-submit-button {
+/* 購入ボタン */
+.form__button-submit {
     width: 100%;
-    background-color: #ff4d4d;
-    /* 理想の画像に近い鮮やかな赤 */
+    background-color: #ff4d4b;
     color: white;
     border: none;
     padding: 18px;
@@ -132,8 +115,4 @@ h3 {
     border-radius: 4px;
     cursor: pointer;
     transition: background-color 0.3s;
-}
-
-.buy-submit-button:hover {
-    background-color: #e60000;
 }

@@ -34,7 +34,25 @@ class Item extends Model
 
     public function categories()
     {
-    return $this->belongsToMany(Category::class, 'category_item');
+        return $this->belongsToMany(Category::class, 'category_item');
+    }
+
+    public function favorites()
+    {
+        return $this->hasMany(Favorite::class);
+    }
+
+// ログインユーザーがお気に入り登録済みか判定するメソッド
+    public function isFavoritedBy($user)
+    {
+        if (!$user) return false;
+        return $this->favorites()->where('user_id', $user->id)->exists();
+    }
+
+    // この商品についた全コメントを取得
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
     }
 
     protected $casts = [
