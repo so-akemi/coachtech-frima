@@ -8,7 +8,13 @@
 <div class="item-detail__container">
     <div class="item-detail__image-section">
         <div class="item-detail__image-wrapper">
-            <img src="{{ $item->image_url }}" alt="{{ $item->name }}" class="item-detail__display-image">
+            @if(str_starts_with($item->image_url, 'http'))
+            <!-- Excelの外部リンクの場合 -->
+              <img src="{{ $item->image_url }}" alt="{{ $item->name }}" class="item-detail__display-image">
+            @else
+            <!-- SellControllerでアップロードした場合 -->
+              <img src="{{ asset('storage/' . $item->image_url) }}" alt="{{ $item->name }}" class="item-detail__display-image">
+            @endif
         </div>
     </div>
 

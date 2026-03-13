@@ -17,7 +17,7 @@
       </div>
 
       <div class="header-center">
-            <form action="#" method="GET" class="search-form">
+            <form action="{{ route('item.index') }}" method="GET" class="search-form">
                 <input type="text" name="keyword" placeholder="なにをお探しですか？" class="search-input">
             </form>
         </div>

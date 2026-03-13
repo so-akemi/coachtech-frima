@@ -21,8 +21,9 @@ class ProfileController extends Controller
 
         // 2. 条件に応じて中身を上書きする
         if ($currentPage === 'buy') {
-        // 購入した商品の取得（まだ機能がない場合は空のままでOK）
-        // $buyItems = ... 
+        $buyItems = \App\Models\Item::whereHas('order', function ($query) use ($user) {
+            $query->where('user_id', $user->id);
+        })->get();
         } else {
         // 出品した商品の取得
         $sellItems = \App\Models\Item::where('user_id', $user->id)->get();

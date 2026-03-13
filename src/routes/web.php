@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SellController;
+use App\Http\Controllers\CommentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,7 +21,6 @@ use App\Http\Controllers\SellController;
 
 Route::get('/', [ItemController::class, 'index'])->name('item.index');
 Route::get('/item/{item_id}', [ItemController::class, 'show'])->name('item.show');
-
 
 Route::middleware('auth')->group(function () {
     Route::get('/item/purchase/{item_id}', [ItemController::class, 'purchase'])->name('item.purchase');

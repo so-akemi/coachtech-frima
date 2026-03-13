@@ -7,7 +7,7 @@
 @section('content')
 <div class="address__content">
     <div class="address__heading">
-        <h2>住所の変更</h2>
+        <h1>住所の変更</h1>
     </div>
 
     <form action="{{ route('address.update', ['item_id' => $item->id]) }}" method="POST" class="form">

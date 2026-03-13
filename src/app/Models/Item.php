@@ -27,7 +27,7 @@ class Item extends Model
     }
 
     // 商品・注文は一つの注文に属する
-    public function orders()
+    public function order()
     {
         return $this->hasOne(Order::class);
     }

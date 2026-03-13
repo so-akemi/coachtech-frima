@@ -9,9 +9,13 @@
     <div class="mypage__user-profile">
         <div class="mypage__user-info-flex">
             <div class="mypage__user-avatar">
-                <div class="mypage__avatar-circle"></div>
+                <div class="mypage__avatar-circle">
+                    @if($user->image_url)
+                      <img src="{{ asset('storage/' . $user->image_url) }}" alt="" class="mypage__avatar-img">
+                    @endif
+                </div>
             </div>
-            <h2 class="mypage__user-name">{{ $user->name }}</h2>
+            <h1 class="mypage__user-name">{{ $user->name }}</h1>
             <div class="mypage__edit-action">
                 <a href="{{ route('profile.edit') }}" class="mypage__edit-button">プロフィールを編集</a>
             </div>
@@ -35,7 +39,13 @@
                 <div class="mypage__product-card">
                     <a href="{{ route('item.show', ['item_id' => $item->id]) }}">
                         <div class="mypage__product-image-container">
-                            <img src="{{ asset('storage/' . $item->image_url) }}" alt="{{ $item->name }}">
+                            @if(str_starts_with($item->image_url, 'http'))
+                            <!-- ExcelのURL（外部リンク）の場合 -->
+                              <img src="{{ $item->image_url }}" alt="{{ $item->name }}">
+                            @else
+                            <!-- 自作の出品機能でアップロードした画像の場合 -->
+                              <img src="{{ asset('storage/' . $item->image_url) }}" alt="{{ $item->name }}">
+                            @endif
                         </div>
                         <p class="mypage__product-name">{{ $item->name }}</p>
                     </a>
@@ -48,7 +58,11 @@
                 <div class="mypage__product-card">
                     <a href="{{ route('item.show', ['item_id' => $item->id]) }}">
                         <div class="mypage__product-image-container">
-                            <img src="{{ asset('storage/' . $item->image_url) }}" alt="{{ $item->name }}">
+                            @if(str_starts_with($item->image_url, 'http'))
+                             <img src="{{ $item->image_url }}" alt="{{ $item->name }}">
+                            @else
+                             <img src="{{ asset('storage/' . $item->image_url) }}" alt="{{ $item->name }}">
+                            @endif
                         </div>
                         <p class="mypage__product-name">{{ $item->name }}</p>
                     </a>

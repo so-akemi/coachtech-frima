@@ -7,7 +7,7 @@
 @section('content')
 <div class="profile-edit__content">
     <div class="profile-edit__heading">
-        <h2>プロフィール設定</h2>
+        <h1>プロフィール設定</h1>
     </div>
     
     <form action="{{ route('profile.update') }}" method="POST" class="form">

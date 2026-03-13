@@ -12,15 +12,26 @@ class ItemController extends Controller
 {
     public function index(Request $request) {
         $tab = $request->get('tab');
+        $keyword = $request->get('keyword'); // 検索キーワード取得
+        $user = auth()->user();
+
+        $query = Item::query();
+
+        // FN016: 検索機能（商品名で部分一致）
+        if ($keyword) {
+        $query->where('name', 'like', '%' . $keyword . '%');
+        }
+
         if ($tab === 'mylist') {
-        // ログインユーザーがお気に入り登録している商品のみ取得
-        // ※お気に入り機能（Favoriteモデル等）が実装されている前提です
-        $items = auth()->check() 
-            ? auth()->user()->favoriteItems()->get() 
-            : collect();
+        // FN015: マイリスト（ログイン時のみ）
+        $items = $user ? $user->favoriteItems()->where('name', 'like', '%' . $keyword . '%')->get() : collect();
         } else {
-        // 全商品（おすすめ）を取得
-        $items = Item::all();
+        // FN014: 全商品取得
+        // FN014-4: 自分が出品した商品は表示しない
+        if ($user) {
+            $query->where('user_id', '!=', $user->id);
+        }
+        $items = $query->get();
         }
 
         return view('items.index', compact('items'));
@@ -80,7 +91,7 @@ class ItemController extends Controller
     // 3. 使い終わった一時住所セッションを消去する
         session()->forget("address_for_item_{$item_id}");
 
-        return view('purchase.success');
+        return redirect()->route('item.index')->with('message', 'ご購入ありがとうございました！');
     }
 
     public function create()
