@@ -10,7 +10,16 @@
         <h1>プロフィール設定</h1>
     </div>
     
-    <form action="{{ route('profile.update') }}" method="POST" class="form">
+    <form class="form" action="{{ route('profile.update') }}" method="POST">
+        @if ($errors->any())
+        <div style="color: red;">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+        @endif
         @csrf
         <div class="form__group">
             <div class="form__group-title">
@@ -18,10 +27,10 @@
             </div>
             <div class="form__group-content">
                 <div class="form__input--text">
-                    <input type="text" name="name" value="{{ old('name', $user->name) }}">
+                    <input type="text" name="user_name" value="{{ old('user_name', $user->name) }}">
                 </div>
                 <div class="form__error">
-                    @error('name') {{ $message }} @enderror
+                    @error('user_name') {{ $message }} @enderror
                 </div>
             </div>
         </div>

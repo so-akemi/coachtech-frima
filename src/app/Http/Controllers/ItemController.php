@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\Item;
 use App\Models\Order;
 use App\Models\Category;
+use App\Http\Requests\AddressRequest;
+use App\Http\Requests\PurchaseRequest;
 use Illuminate\Support\Facades\Auth;
 
 class ItemController extends Controller
@@ -62,7 +64,7 @@ class ItemController extends Controller
         return view('purchase.address', compact('item'));
     }
 
-    public function updateAddress(Request $request, $item_id) {
+    public function updateAddress(AddressRequest $request, $item_id) {
         // 入力値をセッションに保存（'address_item_1' のように商品IDをキーにすると確実）
         session(["address_for_item_{$item_id}" => $request->only(['postal_code', 'address', 'building'])]);
         // ここで住所の更新処理を実装（例: ユーザーの住所情報を保存するなど）
@@ -70,8 +72,15 @@ class ItemController extends Controller
         return redirect()->route('item.purchase', ['item_id' => $item_id]);
     }
 
-    public function buy(Request $request, $item_id)
+    public function buy(PurchaseRequest $request, $item_id)
     {
+        $item = Item::findOrFail($item_id);
+
+        // 既に売り切れていないかチェック（二重購入防止）
+        if (Order::where('item_id', $item_id)->exists()) {
+        return back()->with('error', 'この商品は既に売り切れています。');
+        }
+
         // セッションに保存された住所を取得、なければUserのデフォルト住所を使う
         $address = session("address_for_item_{$item_id}") ?? [
         'postal_code' => auth()->user()->postal_code,
@@ -83,6 +92,7 @@ class ItemController extends Controller
         Order::create([
         'user_id' => auth()->id(),
         'item_id' => $item_id,
+        'payment_method' => $request->payment_method,
         'postal_code' => $address['postal_code'],
         'address' => $address['address'],
         'building' => $address['building'],
@@ -96,8 +106,8 @@ class ItemController extends Controller
 
     public function create()
     {
-    $categories = Category::all(); // DBから全カテゴリー取得
-    return view('items.create', compact('categories'));
+        $categories = Category::all(); // DBから全カテゴリー取得
+        return view('items.create', compact('categories'));
     }
 
     public function toggleFavorite($item_id)

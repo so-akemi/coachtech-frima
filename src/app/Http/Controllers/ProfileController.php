@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Item;
+use App\Http\Requests\ProfileRequest;
+use App\Http\Requests\AddressRequest;
 
 class ProfileController extends Controller
 {
@@ -45,25 +47,29 @@ class ProfileController extends Controller
     /**
      * プロフィールの更新処理
      */
-    public function update(Request $request)
+    public function update(ProfileRequest $request)
     {
         $user = Auth::user();
 
-        // バリデーション
-        $request->validate([
-            'name'        => ['required', 'string', 'max:255'],
-            'postal_code' => ['required', 'string', 'max:8'],
-            'address'     => ['required', 'string', 'max:255'],
-            'building'    => ['nullable', 'string', 'max:255'],
-        ]);
+        // 画像の処理
+        if ($request->hasFile('image')) {
+            // 古い画像があれば削除
+            if ($user->image_url) {
+                Storage::disk('public')->delete($user->image_url);
+            }
+            $path = $request->file('image')->store('profiles', 'public');
+            $user->image_url = $path;
+        }
 
         // データの更新
         $user->update([
-            'name'        => $request->name,
+            'name' => $request->user_name,
             'postal_code' => $request->postal_code,
-            'address'     => $request->address,
-            'building'    => $request->building,
+            'address' => $request->address,
+            'building' => $request->building,
         ]);
+
+        $user->save();
 
         // 更新後はトップページ（商品一覧）へ
         return redirect('/')->with('message', 'プロフィールを更新しました');
