@@ -11,17 +11,23 @@
     </div>
     
     <form class="form" action="{{ route('profile.update') }}" method="POST">
-        @if ($errors->any())
-        <div style="color: red;">
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-        @endif
         @csrf
         <div class="form__group">
+            <div class="form__user-avatar">
+                <div class="form__avatar-circle">
+                    @if($user->image_url)
+                      <img src="{{ asset('storage/' . $user->image_url) }}" alt="" class="form__avatar-img">
+                    @endif
+                </div>
+
+                <div class="form__avatar-input">
+                  <label class="form__label--file">
+                    画像を選択する
+                    <input type="file" name="image" accept="image/*">
+                  </label>
+                </div>
+            </div>
+            
             <div class="form__group-title">
                 <span class="form__label--item">ユーザー名</span>
             </div>

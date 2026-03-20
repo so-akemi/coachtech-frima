@@ -64,6 +64,10 @@
     object-fit: cover;
 }
 
+.index__product-image else{
+    color: #666;
+}
+
 .index__sold-badge {
     position: absolute;
     top: 0;
@@ -90,7 +94,6 @@
     /* 文字を傾ける */
     display: block;
     width: 50px;
-    text-align: center;
 }
 
 .index__product-name {

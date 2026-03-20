@@ -22,19 +22,31 @@ use App\Http\Controllers\CommentController;
 Route::get('/', [ItemController::class, 'index'])->name('item.index');
 Route::get('/item/{item_id}', [ItemController::class, 'show'])->name('item.show');
 
-Route::middleware('auth')->group(function () {
+// 2. ログイン必須。ただし verified（メール認証）はここでは付けない
+Route::middleware(['auth'])->group(function () {
+    Route::get('/mypage/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::post('/mypage/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::get('/mypage', [ProfileController::class, 'index'])->name('profile.index');
+
+    Route::get('/email/verify/manual', function () {
+        $user = auth()->user();
+        if (!$user->hasVerifiedEmail()) {
+            $user->markEmailAsVerified();
+            event(new \Illuminate\Auth\Events\Verified($user));
+        }
+        // 認証完了後、プロフィール設定画面へ
+        return redirect()->route('profile.edit')->with('message', 'メール認証が完了しました。');
+    })->name('verification.notice.manual');
+});
+
+Route::middleware('auth', 'verified')->group(function () {
     Route::get('/item/purchase/{item_id}', [ItemController::class, 'purchase'])->name('item.purchase');
    Route::get('/purchase/address/{item_id}', [ItemController::class, 'editAddress'])->name('address.edit');
    Route::post('/purchase/address/{item_id}', [ItemController::class, 'updateAddress'])->name('address.update');
    Route::post('/purchase/{item_id}', [ItemController::class, 'buy'])->name('item.buy');
-   // マイページトップ（プロフィールと出品・購入一覧）
-    Route::get('/mypage', [ProfileController::class, 'index'])->name('profile.index');
-   // プロフィール設定画面（初回登録時・編集時）
-   Route::get('/mypage/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-   // プロフィール更新処理
-   Route::post('/mypage/profile', [ProfileController::class, 'update'])->name('profile.update');
    Route::get('/sell', [SellController::class, 'create'])->name('item.create');
    Route::post('/sell', [SellController::class, 'store'])->name('item.store');
    Route::post('/favorite/{item_id}', [ItemController::class, 'toggleFavorite'])->name('favorite.toggle');
    Route::post('/comments', [CommentController::class, 'store'])->name('comment.store');
+   Route::get('/purchase/success/{item_id}', [ItemController::class, 'success'])->name('payment.success');
 });

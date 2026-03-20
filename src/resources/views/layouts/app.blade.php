@@ -11,13 +11,15 @@
 <body>
   <header class="header">
     <div class="header__inner">
-      <div class="header__right">
+      <div class="header__left">
          <a href="/">
         <img src="{{ asset('img/COACHTECHヘッダーロゴ.png') }}" alt="COACHTECH" class="header__logo-image" />
+         </a>
       </div>
 
       <div class="header-center">
             <form action="{{ route('item.index') }}" method="GET" class="search-form">
+                <input type="hidden" name="tab" value="{{ $tab?? '' }}">
                 <input type="text" name="keyword" placeholder="なにをお探しですか？" class="search-input">
             </form>
         </div>
@@ -25,9 +27,9 @@
         <nav class="header-right">
             @auth
             <!-- ログインしている時 -->
-            <form action="{{ route('logout') }}" method="POST" style="display: inline;">
+            <form action="{{ route('logout') }}" method="POST">
               @csrf
-              <button type="submit" class="nav-item" style="background: none; border: none; cursor: pointer;">ログアウト</button>
+              <button type="submit" class="nav-item">ログアウト</button>
             </form>
             <a href="{{ route('profile.index') }}" class="nav-item">マイページ</a>
             @endauth

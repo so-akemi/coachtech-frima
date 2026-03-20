@@ -14,6 +14,8 @@ use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Validator;
 use Laravel\Fortify\Fortify;
+use Laravel\Fortify\Contracts\LoginResponse;
+use Laravel\Fortify\Contracts\RegisterResponse;
 
 class FortifyServiceProvider extends ServiceProvider
 {
@@ -70,6 +72,28 @@ class FortifyServiceProvider extends ServiceProvider
                 \Laravel\Fortify\Actions\AttemptToAuthenticate::class,
                 \Laravel\Fortify\Actions\RedirectIfTwoFactorAuthenticatable::class,
             ]);
+        });
+
+        Fortify::verifyEmailView(function () {
+        return view('auth.verify-email');
+        });
+
+        // 1. ログイン成功時のリダイレクト先を動的に変更する
+        $this->app->instance(LoginResponse::class, new class implements LoginResponse {
+          public function toResponse($request) {
+            $user = auth()->user();
+            // 住所（郵便番号）がなければプロフィール設定へ、あればトップへ
+            $redirect = is_null($user->postal_code) ? route('profile.edit') : '/';
+            return redirect()->intended($redirect);
+          }
+        });
+
+        // 2. 会員登録成功時のリダイレクト先を固定する
+        // RouteServiceProvider::HOME を無視して、確実に「認証誘導画面」へ飛ばす
+        $this->app->instance(RegisterResponse::class, new class implements RegisterResponse {
+          public function toResponse($request) {
+            return redirect()->route('verification.notice');
+          }
         });
     }
 }

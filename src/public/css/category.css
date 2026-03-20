@@ -1,18 +1,18 @@
 /* カテゴリータグの親コンテナ */
-.category-group {
+.form__group-category-grid {
     display: flex;
     flex-wrap: wrap;
-    gap: 15px;
+    gap: 12px;
     margin-top: 10px;
 }
 
 /* チェックボックスを隠す */
-.category-label input[type="checkbox"] {
+.form__input--checkbox {
     display: none;
 }
 
 /* タグの初期状態：赤枠・赤文字 */
-.category-tag {
+.form__category-tag {
     display: inline-block;
     padding: 6px 18px;
     border: 1px solid #ff4d4b;
@@ -23,15 +23,16 @@
     font-weight: bold;
     transition: all 0.3s ease;
     user-select: none;
+    background-color: white;
 }
 
 /* チェックされた時の状態：背景が赤・文字が白 */
-.category-label input[type="checkbox"]:checked+.category-tag {
+.form__input--checkbox:checked+.form__category-name {
     background-color: #ff4d4b;
     color: white;
 }
 
 /* ホバー時の微調整 */
-.category-tag:hover {
+.form__category-name:hover {
     background-color: rgba(255, 77, 75, 0.1);
 }

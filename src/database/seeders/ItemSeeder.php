@@ -10,7 +10,10 @@ class ItemSeeder extends Seeder
 {
     public function run()
     {
-        $user = \App\Models\User::first() ?? \App\Models\User::factory()->create();
+        $seller = User::factory()->create([
+        'name'  => '出品者ユーザー',
+        'email' => 'seller@example.com',
+        ]);
 
         $items = [
             ["name" => "腕時計", "price" => 15000, "brand" => "Rolax", "description" => "スタイリッシュなデザインのメンズ腕時計", "image_url" => "https://coachtech-matter.s3.ap-northeast-1.amazonaws.com/image/Armani+Mens+Clock.jpg", "condition" => "良好"],
@@ -27,7 +30,7 @@ class ItemSeeder extends Seeder
 
         foreach ($items as $item) {
             \App\Models\Item::create([
-                "user_id" => $user->id,
+                "user_id" => $seller->id,
                 "name" => $item["name"],
                 "price" => $item["price"],
                 "brand" => $item["brand"],

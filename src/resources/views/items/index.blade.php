@@ -8,14 +8,14 @@
 <div class="index__content">
     <div class="index__tab-menu">
         <!-- tabパラメータがない、または 'index' の時に赤くなる -->
-        <a href="{{ route('item.index') }}" 
-           class="{{ request('tab') !== 'mylist' ? 'index__tab-item--active' : 'index__tab-item' }}">
+        <a href="{{ route('item.index', ['tab' => 'recommend']) }}" 
+           class="{{ $tab !== 'mylist' ? 'index__tab-item--active' : 'index__tab-item' }}">
            おすすめ
         </a>
         
         <!-- tabパラメータが 'mylist' の時に赤くなる -->
         <a href="{{ route('item.index', ['tab' => 'mylist']) }}" 
-           class="{{ request('tab') === 'mylist' ? 'index__tab-item--active' : 'index__tab-item' }}">
+         class="{{ $tab === 'mylist' ? 'index__tab-item--active' : 'index__tab-item' }}">
            マイリスト
         </a>
     </div>
@@ -32,7 +32,7 @@
                          <img src="{{ asset('storage/' . $item->image_url) }}" alt="{{ $item->name }}" class="index__product-image">
                       @endif
                       @else
-                         <span style="color: #666;">商品画像</span>
+                         <span>商品画像</span>
                     @endif
                     @if($item->order) 
                         <div class="index__sold-badge">

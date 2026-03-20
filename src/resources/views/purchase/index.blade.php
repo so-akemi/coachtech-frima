@@ -10,7 +10,13 @@
         <div class="purchase__item-confirm">
             <div class="purchase__item-info">
                 <div class="purchase__item-image">
-                    <img src="{{ $item->image_url }}" alt="{{ $item->name }}">
+                    @if(str_starts_with($item->image_url, 'http'))
+                    <!-- Excelの外部リンクの場合 -->
+                      <img src="{{ $item->image_url }}" alt="{{ $item->name }}" class="item-detail__display-image">
+                    @else
+                      <!-- SellControllerでアップロードした場合 -->
+                      <img src="{{ asset('storage/' . $item->image_url) }}" alt="{{ $item->name }}" class="item-detail__display-image">
+                    @endif
                 </div>
                 <div class="purchase__item-text">
                     <p class="purchase__item-name">{{ $item->name }}</p>
@@ -64,17 +70,6 @@
                     <td id="display_payment_method">未選択</td>
                 </tr>
             </table>
-
-            <!-- デバッグ用：エラーがあれば全部出す -->
-            @if ($errors->any())
-              <div style="color: red;">
-               <ul>
-               @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-               @endforeach
-               </ul>
-              </div>
-            @endif
 
             <form action="{{ route('item.buy', ['item_id' => $item->id]) }}" method="POST" id="buy-form" class="purchase__buy-form">
                 @csrf

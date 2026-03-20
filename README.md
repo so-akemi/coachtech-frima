@@ -1,66 +1,88 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+# coachtechフリマ
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## 環境構築
 
-## About Laravel
+### 1. リポジトリのクローンと起動
+#### Dockerビルド
+- git clone git@github.com:so-akemi/coachtech-frima.git
+- cd coachtech-frima
+- DockerDesktopアプリを立ち上げる
+- docker-compose up -d --build
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+### 2. Laravel環境構築
+#### コンテナ内に入り、依存関係のインストールと初期設定を行います。
+- コンテナ内に入る  
+docker-compose exec --user $USER:$USER php bash ※userで入ってできるか検証
+- 依存関係のインストール  
+composer install
+- 環境設定ファイルの作成  
+cp .env.example .env
+- アプリケーションキーの生成  
+php artisan key:generate
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+### 3. データベース接続設定と構築
+####  .envファイルの設定  
+※DB_HOST は 127.0.0.1 ではなく、Dockerサービス名の mysql を指定してください。
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+   <.envファイル>  
+    DB_CONNECTION=mysql  
+    DB_HOST=mysql  
+    DB_PORT=3306  
+    DB_DATABASE=laravel_db  
+    DB_USERNAME=laravel_user  
+    DB_PASSWORD=laravel_pass  
 
-## Learning Laravel
+※.envファイルが権限エラーで保存できない場合は、以下コマンドを実施してください。(srcディレクトリ直下)
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+- sudo chown -R $USER:$USER .
+- chmod 664 .env  
+(コマンド実行後、ファイルの変更を保存してください)
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+#### 設定変更後はPHPコンテナ内にて下記コマンドを実行してください。
+- php artisan config:clear
+- php artisan cache:clear
 
-## Laravel Sponsors
+#### マイグレーションとシーディングを実行  
+- php artisan migrate:fresh --seed  
+※エラーが発生した場合は、下記コマンドでコンテナ再起動後、再度php artisan config:clear～php artisan migrate:fresh --seedを実行してください。
+- docker-compose down
+- docker-compose up -d
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
 
-### Premium Partners
+### 4. ディレクトリ権限の設定
+#### ファイルの書き込みエラーを防ぐため、コンテナ内の src ディレクトリにて以下の権限付与を実行してください。
+- chmod -R 777 storage bootstrap/cache
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+## 使用技術（実行環境）
 
-## Contributing
+- PHP 8.2.11
+- Laravel 8.x
+- MySQL 8.0.26
+- Nginx 1.21.1
+- Docker / Docker Compose
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+## ER図
+![ER図](docs/er-diagram.drawio.png)
 
-## Code of Conduct
+- 開発環境：http://localhost/
+- お問い合わせ画面：http://localhost/
+- 管理画面ログイン：http://localhost/login
+- ユーザー登録：http://localhost/register
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+## 機能一覧
 
-## Security Vulnerabilities
+- お問い合わせフォーム入力・確認・完了
+- ログイン・ログアウト機能
+- 管理画面：お問い合わせ一覧表示
+- 管理画面：検索機能（名前、メール、性別、種類、日付）
+- 管理画面：詳細モーダル表示
+- 管理画面：データ削除機能
+- 管理画面：CSVエクスポート機能
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+## テスト用ログイン情報
+データベース構築（`php artisan db:seed`）後、以下のユーザーとダミーデータが生成されます。
+生成された以下のユーザーデータでログインして管理画面が確認できます。
 
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
-
-# coachtech-frima
+- 管理画面URL：`http://localhost/login`
+- メールアドレス：test123@example.com
+- パスワード：coachtech123test

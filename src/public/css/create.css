@@ -167,28 +167,48 @@
     opacity: 0.8;
 }
 
-/* カテゴリー選択用（includeされているコンポーネント用） */
-.category-group {
+/* カテゴリー選択用（HTMLのクラス名に合わせました） */
+
+/* 外側のコンテナ：要素を横並びにして折り返す */
+.form__group-category-grid {
     display: flex;
     flex-wrap: wrap;
     gap: 12px;
+    margin-top: 10px;
 }
 
-.category-label input {
+/* 実際のチェックボックスを隠す */
+.form__input--checkbox {
     display: none;
 }
 
-.category-tag {
+/* ラベル兼タグの見た目（未選択時） */
+.form__category-name {
     display: inline-block;
     padding: 6px 20px;
     border: 1px solid #ff4d4b;
+    /* 赤い枠線 */
     color: #ff4d4b;
+    /* 赤い文字 */
     border-radius: 20px;
+    /* 角丸（カプセル型） */
     cursor: pointer;
     font-weight: bold;
+    font-size: 14px;
+    background-color: #fff;
+    transition: all 0.3s ease;
+    user-select: none;
+    /* 文字選択を防ぐ */
 }
 
-.category-label input:checked+.category-tag {
+/* チェックが入った時の見た目（選択時：背景赤・文字白） */
+/* 隣接セレクタ(+)を使って、チェックされた直後のspanを装飾 */
+.form__input--checkbox:checked+.form__category-name {
     background-color: #ff4d4b;
-    color: white;
+    color: #ffffff;
+}
+
+/* ホバーした時に少しだけ背景を赤らめる */
+.form__category-name:hover {
+    background-color: rgba(255, 77, 75, 0.05);
 }

@@ -8,14 +8,21 @@ use App\Models\Order;
 use App\Models\Category;
 use App\Http\Requests\AddressRequest;
 use App\Http\Requests\PurchaseRequest;
+use Stripe\Stripe;
+use Stripe\Checkout\Session;
 use Illuminate\Support\Facades\Auth;
 
 class ItemController extends Controller
 {
     public function index(Request $request) {
-        $tab = $request->get('tab');
         $keyword = $request->get('keyword'); // 検索キーワード取得
         $user = auth()->user();
+
+        // URLパラメータに 'tab' がない場合、ログイン中なら 'mylist'、未ログインなら 'recommend' をデフォルトにする
+        $tab = $request->get('tab');
+        if (!$tab) {
+        $tab = $user ? 'mylist' : 'recommend';
+        }
 
         $query = Item::query();
 
@@ -36,7 +43,7 @@ class ItemController extends Controller
         $items = $query->get();
         }
 
-        return view('items.index', compact('items'));
+        return view('items.index', compact('items', 'tab'));
     }
 
     public function show($item_id) {
@@ -76,29 +83,74 @@ class ItemController extends Controller
     {
         $item = Item::findOrFail($item_id);
 
-        // 既に売り切れていないかチェック（二重購入防止）
+        // 既に売り切れていないかチェック
         if (Order::where('item_id', $item_id)->exists()) {
-        return back()->with('error', 'この商品は既に売り切れています。');
+            return back()->with('error', 'この商品は既に売り切れています。');
         }
 
-        // セッションに保存された住所を取得、なければUserのデフォルト住所を使う
-        $address = session("address_for_item_{$item_id}") ?? [
-        'postal_code' => auth()->user()->postal_code,
-        'address'     => auth()->user()->address,
-        'building'    => auth()->user()->building,
-        ];
+        // Stripeのシークレットキーを設定
+        Stripe::setApiKey(config('services.stripe.secret'));
 
-        // Orderテーブルにレコードを作成（これで紐づけ完了！）
-        Order::create([
-        'user_id' => auth()->id(),
-        'item_id' => $item_id,
-        'payment_method' => $request->payment_method,
-        'postal_code' => $address['postal_code'],
-        'address' => $address['address'],
-        'building' => $address['building'],
+        // Stripe Checkoutセッションの作成
+        $checkout_session = Session::create([
+            'payment_method_types' => ['card', 'konbini'],
+            'line_items' => [[
+                'price_data' => [
+                    'currency' => 'jpy',
+                    'product_data' => [
+                        'name' => $item->name,
+                    ],
+                    'unit_amount' => $item->price,
+                ],
+                'quantity' => 1,
+            ]],
+            'mode' => 'payment',
+            // 決済完了後のリダイレクト先（ successメソッドへ ）
+            'success_url' => route('payment.success', ['item_id' => $item->id]) . '?session_id={CHECKOUT_SESSION_ID}',
+            'cancel_url' => route('item.purchase', ['item_id' => $item->id]),
+            // 成功した時にDBに保存したい情報を metadata に隠し持つ
+            'metadata' => [
+                'user_id' => auth()->id(),
+                'item_id' => $item_id,
+                'payment_method' => $request->payment_method,
+            ],
         ]);
 
-    // 3. 使い終わった一時住所セッションを消去する
+        return redirect($checkout_session->url);
+    }
+
+    /**
+     * ステップ2: 決済成功 -> アプリに戻ってきてDB保存
+     */
+    public function success(Request $request, $item_id)
+    {
+        $item = Item::findOrFail($item_id);
+
+        // すでにOrderがある場合は二重保存を防止
+        if (Order::where('item_id', $item_id)->exists()) {
+             return redirect()->route('item.index');
+        }
+
+        // 本来はStripeのSessionを取得してmetadataを確認するのが確実ですが、
+        // 学習用として、現在のセッションとリクエストから保存処理を行います。
+        
+        $address = session("address_for_item_{$item_id}") ?? [
+            'postal_code' => auth()->user()->postal_code,
+            'address'     => auth()->user()->address,
+            'building'    => auth()->user()->building,
+        ];
+
+        // ここでDBに保存（元々 buy にあった処理をここに移動）
+        Order::create([
+            'user_id' => auth()->id(),
+            'item_id' => $item_id,
+            'payment_method' => 'カード払い', // Stripe経由なので
+            'postal_code' => $address['postal_code'],
+            'address' => $address['address'],
+            'building' => $address['building'],
+        ]);
+
+        // セッション消去
         session()->forget("address_for_item_{$item_id}");
 
         return redirect()->route('item.index')->with('message', 'ご購入ありがとうございました！');

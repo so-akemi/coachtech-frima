@@ -2,6 +2,7 @@
 
 /* 全体のレイアウト */
 .item-detail__container {
+    position: relative;
     display: flex;
     max-width: 1000px;
     margin: 40px auto;
@@ -16,6 +17,7 @@
 }
 
 .item-detail__image-wrapper {
+    position: relative;
     background-color: #f5f5f5;
     /* 画像がない場合のグレー背景 */
     aspect-ratio: 1 / 1;
@@ -29,6 +31,30 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
+    display: block;
+}
+
+.item-sold__badge {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: #ff4d4b;
+    color: white;
+    width: 200px;
+    /* リボンの長さ */
+    height: 60px;
+    /* リボンの太さ */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 15px;
+    font-size: 20px;
+    font-weight: bold;
+    z-index: 10;
+    
+    /* 左上に斜めに配置するための魔法の3行 */
+    transform: rotate(-45deg) translate(-45px, -60px);
+    transform-origin: center;
 }
 
 /* 右側：商品情報セクション */
@@ -182,4 +208,33 @@
     font-weight: bold;
     border-radius: 4px;
     cursor: pointer;
+}
+
+.form__button-submit {
+    display: block;
+    /* 幅いっぱいに広げる */
+    width: 100%;
+    /* 横幅100% */
+    background-color: #ff4d4b;
+    /* 商品画像のボタンと同じ赤 */
+    color: white !important;
+    /* 文字色は白（!importantでリンクの青を打ち消す） */
+    border: none;
+    padding: 12px;
+    font-weight: bold;
+    border-radius: 4px;
+    text-align: center;
+    /* 文字を中央寄せ */
+    text-decoration: none;
+    /* リンクの下線を消す */
+    cursor: pointer;
+    transition: opacity 0.3s;
+    box-sizing: border-box;
+    /* パディングを含めたサイズ計算 */
+}
+
+.form__button-submit:hover {
+    opacity: 0.8;
+    color: white;
+    /* ホバー時も白を維持 */
 }

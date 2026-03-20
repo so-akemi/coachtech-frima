@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use App\Models\Item;
 use App\Http\Requests\ProfileRequest;
 use App\Http\Requests\AddressRequest;
@@ -40,7 +41,15 @@ class ProfileController extends Controller
      */
     public function edit()
     {
-        $user = Auth::user();
+        // 現在ログインしているユーザー情報を取得
+        $user = auth()->user();
+
+        // もしメール認証がまだなら、誘導画面へ飛ばす（以前入れたループ防止処理）
+        if (!$user->hasVerifiedEmail()) {
+        return redirect()->route('verification.notice');
+        }
+
+        // 画面（view）を表示する際に、compact('user') で変数を渡す
         return view('profile.edit', compact('user'));
     }
 

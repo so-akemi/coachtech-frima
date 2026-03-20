@@ -8,6 +8,10 @@
 <div class="item-detail__container">
     <div class="item-detail__image-section">
         <div class="item-detail__image-wrapper">
+            @if($item->order)
+            <div class="item-sold__badge">Sold</div>
+            @endif
+            
             @if(str_starts_with($item->image_url, 'http'))
             <!-- Excelの外部リンクの場合 -->
               <img src="{{ $item->image_url }}" alt="{{ $item->name }}" class="item-detail__display-image">
@@ -96,8 +100,7 @@
                 @endforeach
             </div>
 
-            @auth
-                <form action="{{ route('comment.store') }}" method="POST" class="item-detail__comment-form">
+                <form action="{{ route('comment.store') }}" method="POST" class="item-detail__comment-form" novalidate>
                     @csrf
                     <input type="hidden" name="item_id" value="{{ $item->id }}">
                     
@@ -115,12 +118,13 @@
                         </div>
                     </div>
                     <div class="form__button">
+                      @auth
                         <button type="submit" class="form__button-submit">コメントを送信する</button>
+                      @else
+                        <a href="{{ route('login') }}" class="form__button-submit">コメントを送信する</a>
+                      @endauth
                     </div>
                 </form>
-            @else
-                <p class="login-prompt">コメントするには<a href="{{ route('login') }}">ログイン</a>が必要です。</p>
-            @endauth
         </section>
     </div>
 </div>

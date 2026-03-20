@@ -64,6 +64,6 @@ a.login__button-submit:hover {
     opacity: 0.8;
 }
 
-.error {
+.form__error {
     color: red;
 }
