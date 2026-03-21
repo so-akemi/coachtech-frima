@@ -44,7 +44,7 @@
 
 - 決済機能（stripe）の設定  
      本アプリの動作確認には、Stripeのテスト用APIキーが必要です。
-     Stripeダッシュボード[https://dashboard.stripe.com/test/apikeys](要ログイン)から取得したキーを、以下の項目に設定してください。
+     [Stripeダッシュボード※要ログイン](https://dashboard.stripe.com/test/apikeys)から取得したキーを、以下の項目に設定してください。
     ```  
      STRIPE_KEY=pk_test_...（ご自身の公開鍵を貼り付け）  
      STRIPE_SECRET=sk_test_...（ご自身の秘密鍵を貼り付け）
