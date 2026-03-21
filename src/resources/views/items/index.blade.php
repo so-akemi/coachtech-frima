@@ -8,13 +8,13 @@
 <div class="index__content">
     <div class="index__tab-menu">
         <!-- tabパラメータがない、または 'index' の時に赤くなる -->
-        <a href="{{ route('item.index', ['tab' => 'recommend']) }}" 
-           class="{{ $tab !== 'mylist' ? 'index__tab-item--active' : 'index__tab-item' }}">
+        <a href="{{ route('item.index', ['tab' => 'recommend','keyword' => request('keyword')]) }}" 
+           class="{{$tab !== 'mylist' ? 'index__tab-item--active' : 'index__tab-item' }}">
            おすすめ
         </a>
         
         <!-- tabパラメータが 'mylist' の時に赤くなる -->
-        <a href="{{ route('item.index', ['tab' => 'mylist']) }}" 
+        <a href="{{ route('item.index', ['tab' => 'mylist', 'keyword' => request('keyword')]) }}" 
          class="{{ $tab === 'mylist' ? 'index__tab-item--active' : 'index__tab-item' }}">
            マイリスト
         </a>

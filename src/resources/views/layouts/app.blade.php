@@ -20,7 +20,7 @@
       <div class="header-center">
             <form action="{{ route('item.index') }}" method="GET" class="search-form">
                 <input type="hidden" name="tab" value="{{ $tab?? '' }}">
-                <input type="text" name="keyword" placeholder="なにをお探しですか？" class="search-input">
+                <input type="text" name="keyword" value="{{ request('keyword') }}" placeholder="なにをお探しですか？" class="search-input">
             </form>
         </div>
 

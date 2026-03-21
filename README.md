@@ -1,57 +1,82 @@
 # coachtechフリマ
 
+独自のCtoCフリマアプリ開発プロジェクトです。
+10〜30代の社会人をターゲットに、シンプルで使いやすい出品・購入体験を提供することを目的としています。
+
+## 推奨環境
+- **ブラウザ**: Chrome / Firefox / Safari (最新版)
+- **デバイス**: PC
+
 ## 環境構築
 
-### 1. リポジトリのクローンと起動
-#### Dockerビルド
-- git clone git@github.com:so-akemi/coachtech-frima.git
-- cd coachtech-frima
-- DockerDesktopアプリを立ち上げる
-- docker-compose up -d --build
+### リポジトリのクローンと起動
+#### Dockerビルド  
+1. `git clone git@github.com:so-akemi/coachtech-frima.git`  
+2. `cd coachtech-frima`  
+3. DockerDesktopアプリを立ち上げる  
+4. `docker-compose up -d --build`
 
-### 2. Laravel環境構築
+### Laravel環境構築
 #### コンテナ内に入り、依存関係のインストールと初期設定を行います。
 - コンテナ内に入る  
-docker-compose exec --user $USER:$USER php bash ※userで入ってできるか検証
+`docker compose exec php bash`
 - 依存関係のインストール  
-composer install
+`composer install`
 - 環境設定ファイルの作成  
-cp .env.example .env
+`cp .env.example .env`
 - アプリケーションキーの生成  
-php artisan key:generate
+`php artisan key:generate`
+- ストレージリンクの作成（商品画像表示用）  
+`php artisan storage:link`
 
-### 3. データベース接続設定と構築
+### データベース接続設定と構築
 ####  .envファイルの設定  
-※DB_HOST は 127.0.0.1 ではなく、Dockerサービス名の mysql を指定してください。
 
-   <.envファイル>  
+- データベース接続設定(下記の通り修正)  
+    ```
     DB_CONNECTION=mysql  
     DB_HOST=mysql  
     DB_PORT=3306  
     DB_DATABASE=laravel_db  
     DB_USERNAME=laravel_user  
-    DB_PASSWORD=laravel_pass  
+    DB_PASSWORD=laravel_pass
+    ```
 
-※.envファイルが権限エラーで保存できない場合は、以下コマンドを実施してください。(srcディレクトリ直下)
+- 決済機能（stripe）の設定  
+     本アプリの動作確認には、Stripeのテスト用APIキーが必要です。
+     Stripeダッシュボード[https://dashboard.stripe.com/test/apikeys](要ログイン)から取得したキーを、以下の項目に設定してください。
+    ```  
+     STRIPE_KEY=pk_test_...（ご自身の公開鍵を貼り付け）  
+     STRIPE_SECRET=sk_test_...（ご自身の秘密鍵を貼り付け）
+    ```
 
-- sudo chown -R $USER:$USER .
-- chmod 664 .env  
+
+※ Note: 権限エラーで保存できない場合は、下記コマンドをプロジェクトルート（srcディレクトリ等）で実行してください。 
+``` 
+sudo chown -R $USER:$USER . 
+chmod 664 .env
+``` 
 (コマンド実行後、ファイルの変更を保存してください)
 
-#### 設定変更後はPHPコンテナ内にて下記コマンドを実行してください。
-- php artisan config:clear
-- php artisan cache:clear
+#### 設定反映後、PHPコンテナ内にて下記コマンドを実行してください。
+```
+php artisan config:clear
+php artisan cache:clear
+```
 
 #### マイグレーションとシーディングを実行  
-- php artisan migrate:fresh --seed  
-※エラーが発生した場合は、下記コマンドでコンテナ再起動後、再度php artisan config:clear～php artisan migrate:fresh --seedを実行してください。
-- docker-compose down
-- docker-compose up -d
+`php artisan migrate --seed`  
 
-
-### 4. ディレクトリ権限の設定
+### ディレクトリ権限の設定
 #### ファイルの書き込みエラーを防ぐため、コンテナ内の src ディレクトリにて以下の権限付与を実行してください。
-- chmod -R 777 storage bootstrap/cache
+`chmod -R 777 storage bootstrap/cache`
+
+
+※エラーが発生した場合は、下記コマンドでコンテナ再起動後、再度php artisan config:clear～php artisan migrate:fresh --seedを実行してください。
+```
+docker-compose down
+docker-compose up -d
+```
 
 ## 使用技術（実行環境）
 
@@ -60,29 +85,29 @@ php artisan key:generate
 - MySQL 8.0.26
 - Nginx 1.21.1
 - Docker / Docker Compose
+- Stripe API
 
 ## ER図
 ![ER図](docs/er-diagram.drawio.png)
 
-- 開発環境：http://localhost/
-- お問い合わせ画面：http://localhost/
-- 管理画面ログイン：http://localhost/login
-- ユーザー登録：http://localhost/register
+URL一覧
+- トップ画面: http://localhost/  
+- ログイン画面: http://localhost/login
+- 会員登録画面: http://localhost/register
+- マイページ: http://localhost/mypage
 
 ## 機能一覧
-
-- お問い合わせフォーム入力・確認・完了
-- ログイン・ログアウト機能
-- 管理画面：お問い合わせ一覧表示
-- 管理画面：検索機能（名前、メール、性別、種類、日付）
-- 管理画面：詳細モーダル表示
-- 管理画面：データ削除機能
-- 管理画面：CSVエクスポート機能
+- 認証機能: ログイン・ログアウト・会員登録
+- 商品一覧: 商品の全件表示・商品名によるキーワード検索
+- 商品詳細: 商品情報の閲覧・コメント投稿
+- お気に入り機能: 商品詳細画面での登録/解除
+- 出品機能: 商品画像のアップロード・価格/カテゴリ設定
+- 購入機能: 商品の購入処理
+- プロフィール: プロフィール画像・住所・氏名の編集
+- マイページ: 出品した商品・購入した商品・お気に入りした商品のリスト表示
 
 ## テスト用ログイン情報
-データベース構築（`php artisan db:seed`）後、以下のユーザーとダミーデータが生成されます。
-生成された以下のユーザーデータでログインして管理画面が確認できます。
+php artisan db:seed 実行後、以下のユーザーで即座に動作確認が可能です。
 
-- 管理画面URL：`http://localhost/login`
 - メールアドレス：test123@example.com
 - パスワード：coachtech123test

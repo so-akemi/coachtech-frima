@@ -15,36 +15,33 @@ use Illuminate\Support\Facades\Auth;
 class ItemController extends Controller
 {
     public function index(Request $request) {
-        $keyword = $request->get('keyword'); // 検索キーワード取得
-        $user = auth()->user();
+        $keyword = $request->get('keyword');
+    $user = auth()->user();
+    
+    // URLに 'tab' があればその値を使い、なければ 'mylist' か 'recommend' を自動決定する
+    // ※ ログイン直後（パラメータなし）は自動的に 'mylist' になります
+    $tab = $request->get('tab', $user ? 'mylist' : 'recommend');
 
-        // URLパラメータに 'tab' がない場合、ログイン中なら 'mylist'、未ログインなら 'recommend' をデフォルトにする
-        $tab = $request->get('tab');
-        if (!$tab) {
-        $tab = $user ? 'mylist' : 'recommend';
-        }
+    $query = Item::query();
 
-        $query = Item::query();
-
-        // FN016: 検索機能（商品名で部分一致）
-        if ($keyword) {
+    // 検索
+    if ($keyword) {
         $query->where('name', 'like', '%' . $keyword . '%');
-        }
+    }
 
-        if ($tab === 'mylist') {
-        // FN015: マイリスト（ログイン時のみ）
-        $items = $user ? $user->favoriteItems()->where('name', 'like', '%' . $keyword . '%')->get() : collect();
-        } else {
-        // FN014: 全商品取得
-        // FN014-4: 自分が出品した商品は表示しない
+    if ($tab === 'mylist') {
+        // マイリスト表示
+        $items = $user ? $user->favoriteItems()->where('items.name', 'like', '%' . $keyword . '%')->get() : collect();
+    } else {
+        // おすすめ表示
         if ($user) {
             $query->where('user_id', '!=', $user->id);
         }
         $items = $query->get();
-        }
-
-        return view('items.index', compact('items', 'tab'));
     }
+
+    return view('items.index', compact('items', 'tab'));
+}
 
     public function show($item_id) {
         $item = Item::with('categories')->findOrFail($item_id);

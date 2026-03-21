@@ -42,7 +42,11 @@
     padding: 0 50px;
 }
 
-.index__product-card {
+.index__product-card,
+.index__product-card:link,
+.index__product-card:visited,
+.index__product-card:hover,
+.index__product-card:active {
     text-decoration: none;
     color: #333;
 }
@@ -64,7 +68,14 @@
     object-fit: cover;
 }
 
-.index__product-image else{
+.index__product-name {
+    margin: 10px 0 0 0;
+    font-size: 14px;
+    color: #333;
+    text-decoration: none;
+}
+
+.index__product-image-container span{
     color: #666;
 }
 
@@ -94,9 +105,4 @@
     /* 文字を傾ける */
     display: block;
     width: 50px;
-}
-
-.index__product-name {
-    margin: 0;
-    font-size: 14px;
 }

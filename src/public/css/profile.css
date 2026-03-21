@@ -81,9 +81,27 @@
     gap: 30px;
 }
 
-.mypage__product-card {
+.mypage__product-card a {
     text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+/* 訪問済みやマウスホバー時も色が変わらないように指定 */
+.mypage__product-card a:visited,
+.mypage__product-card a:hover,
+.mypage__product-card a:active {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* 商品名のテキストスタイル */
+.mypage__product-name {
+    margin-top: 10px;
+    font-size: 14px;
     color: #333;
+    /* リンクの青ではなく、任意の文字色を指定 */
+    text-decoration: none;
 }
 
 .mypage__product-image-container {
