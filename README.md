@@ -95,6 +95,7 @@ URL一覧
 - ログイン画面: http://localhost/login
 - 会員登録画面: http://localhost/register
 - マイページ: http://localhost/mypage
+- phpMyAdmin: http://localhost:8080/
 
 ## 機能一覧
 - 認証機能: ログイン・ログアウト・会員登録
