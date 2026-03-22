@@ -8,14 +8,15 @@
     <div class="item-detail-container">
         <div class="item-detail-image-section">
             <div class="item-detail-image-wrapper">
-                @if($item->order)
+                @if ($item->order)
                     <div class="item-sold-badge">Sold</div>
                 @endif
 
-                @if(str_starts_with($item->image_url, 'http'))
+                @if (str_starts_with($item->image_url, 'http'))
                     <img src="{{ $item->image_url }}" alt="{{ $item->name }}" class="item-detail-display-image">
                 @else
-                    <img src="{{ asset('storage/' . $item->image_url) }}" alt="{{ $item->name }}" class="item-detail-display-image">
+                    <img src="{{ asset('storage/' . $item->image_url) }}" alt="{{ $item->name }}"
+                        class="item-detail-display-image">
                 @endif
             </div>
         </div>
@@ -30,7 +31,7 @@
                     <form action="{{ route('favorite.toggle', ['item_id' => $item->id]) }}" method="POST">
                         @csrf
                         <button type="submit" style="background: none; border: none; cursor: pointer; padding: 0;">
-                            @if(Auth::check() && Auth::user()->favoriteItems->contains($item->id))
+                            @if (Auth::check() && Auth::user()->favoriteItems->contains($item->id))
                                 <img src="{{ asset('/img/ハートロゴ_ピンク.png') }}" alt="いいね解除" class="item-detail-icon">
                             @else
                                 <img src="{{ asset('/img/ハートロゴ_デフォルト.png') }}" alt="いいね登録" class="item-detail-icon">
@@ -49,7 +50,7 @@
             </div>
 
             <div class="item-detail-buy-action">
-                @if($item->order)
+                @if ($item->order)
                     <button class="item-detail-buy-button" disabled>購入手続きへ</button>
                 @else
                     <a href="{{ route('item.purchase', ['item_id' => $item->id]) }}" class="item-detail-buy-button">
@@ -71,7 +72,7 @@
                     <div class="item-detail-info-row">
                         <span class="item-detail-info-label">カテゴリー</span>
                         <div class="item-detail-category-tags">
-                            @foreach($item->categories as $category)
+                            @foreach ($item->categories as $category)
                                 <span class="item-detail-category-tag">{{ $category->content }}</span>
                             @endforeach
                         </div>
@@ -87,11 +88,11 @@
                 <h2 class="item-detail-section-title">コメント({{ $item->comments->count() }})</h2>
 
                 <div class="item-detail-comment-list">
-                    @foreach($item->comments as $comment)
+                    @foreach ($item->comments as $comment)
                         <div class="item-detail-comment-item">
                             <div class="item-detail-comment-user">
                                 <div class="item-detail-user-icon">
-                                    @if($comment->user->image_url)
+                                    @if ($comment->user->image_url)
                                         <img src="{{ asset($comment->user->image_url) }}" alt="">
                                     @endif
                                 </div>
@@ -116,9 +117,11 @@
                             <div class="form-input-textarea">
                                 <textarea name="content" required></textarea>
                             </div>
-                            @error('content')
-                                <p class="error-message" style="color: red;">{{ $message }}</p>
-                            @enderror
+                            <div class="form-error">
+                                @error('conent')
+                                    {{ $message }}
+                                @enderror
+                            </div>
                         </div>
                     </div>
 

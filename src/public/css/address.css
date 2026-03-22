@@ -1,7 +1,5 @@
-/* address.css */
 .address-content {
     max-width: 450px;
-    /* 画像のように中央に細長く配置 */
     margin: 80px auto;
     padding: 0 20px;
 }
@@ -24,7 +22,6 @@
     font-size: 16px;
 }
 
-/* 1枚目画像のような四角い入力枠 */
 .form-input-text input {
     width: 100%;
     padding: 12px;
@@ -35,7 +32,6 @@
     outline: none;
 }
 
-/* 1枚目画像のようなパキッとした赤ボタン */
 .form-button-submit {
     width: 100%;
     background-color: #ff4d4b;

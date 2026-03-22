@@ -14,14 +14,12 @@ class CommentController extends Controller
      */
     public function store(CommentRequest $request)
     {
-        // データベースへ保存
         Comment::create([
             'item_id' => $request->item_id,
             'user_id' => Auth::id(),
             'content' => $request->content,
         ]);
 
-        // 元の商品詳細ページへ戻る
         return back()->with('message', 'コメントを投稿しました');
     }
 }

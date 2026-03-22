@@ -15,14 +15,13 @@ class CreateItemsTable extends Migration
     {
         Schema::create('items', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->cascadeOnDelete(); // 出品者ID
-            $table->string('name'); // 商品名
-            $table->integer('price'); // 価格
-            $table->string('brand')->nullable(); // ブランド名（任意）
-            $table->text('description'); // 商品説明
-            $table->string('condition'); // コンディション
-            $table->string('image_url')->nullable(); // 画像のパス
-            // 他にも「状態」や「カテゴリ」が必要になりますが、まずはシンプルに
+            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
+            $table->string('name');
+            $table->integer('price');
+            $table->string('brand')->nullable();
+            $table->text('description');
+            $table->string('condition');
+            $table->string('image_url')->nullable();
             $table->timestamps();
         });
     }

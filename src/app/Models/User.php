@@ -13,8 +13,6 @@ class User extends Authenticatable implements MustVerifyEmail
     use HasApiTokens, HasFactory, Notifiable;
 
     /**
-     * 複数代入可能な属性
-     *
      * @var array<int, string>
      */
     protected $fillable = [
@@ -29,8 +27,6 @@ class User extends Authenticatable implements MustVerifyEmail
     ];
 
     /**
-     * シリアライズ時に隠蔽する属性
-     *
      * @var array<int, string>
      */
     protected $hidden = [
@@ -39,8 +35,6 @@ class User extends Authenticatable implements MustVerifyEmail
     ];
 
     /**
-     * 属性のキャスト設定
-     *
      * @var array<string, string>
      */
     protected $casts = [
@@ -48,7 +42,6 @@ class User extends Authenticatable implements MustVerifyEmail
     ];
 
     /**
-     * ユーザーが所有する商品一覧を取得（出品）
      */
     public function items()
     {
@@ -56,7 +49,6 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     /**
-     * ユーザーが行った注文一覧を取得
      */
     public function orders()
     {
@@ -64,7 +56,6 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     /**
-     * ユーザーがお気に入り登録した商品一覧を取得（多対多）
      */
     public function favoriteItems()
     {
@@ -72,7 +63,6 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     /**
-     * ユーザーが投稿したコメント一覧を取得
      */
     public function comments()
     {

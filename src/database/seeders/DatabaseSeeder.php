@@ -14,9 +14,9 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call([
-            UserSeeder::class,           // 1. まずユーザーを作成
-            CategoriesTableSeeder::class, // 2. 次にマスターデータ（カテゴリー）を作成
-            ItemSeeder::class,           // 3. 最後にユーザーとカテゴリーを紐付けた商品を作成
+            UserSeeder::class,
+            CategoriesTableSeeder::class,
+            ItemSeeder::class,
         ]);
     }
 }

@@ -13,7 +13,6 @@
         <form action="{{ route('item.store') }}" method="POST" class="form" enctype="multipart/form-data">
             @csrf
 
-            {{-- 商品画像 --}}
             <div class="form-group">
                 <div class="form-group-title">
                     <span class="form-label-item">商品画像</span>
@@ -25,7 +24,7 @@
                         </label>
                         <input type="file" name="image" id="image" accept="image/*" class="form-input-file-hidden">
                     </div>
-                    
+
                     <div class="form-error">
                         @error('image')
                             {{ $message }}
@@ -38,7 +37,6 @@
                 <h2>商品の詳細</h2>
             </div>
 
-            {{-- カテゴリー --}}
             <div class="form-group">
                 <div class="form-group-title">
                     <span class="form-label-item">カテゴリー</span>
@@ -53,7 +51,6 @@
                 </div>
             </div>
 
-            {{-- 商品の状態 --}}
             <div class="form-group">
                 <div class="form-group-title">
                     <span class="form-label-item">商品の状態</span>
@@ -81,7 +78,6 @@
                 <h2>商品名と説明</h2>
             </div>
 
-            {{-- 商品名 --}}
             <div class="form-group">
                 <div class="form-group-title">
                     <span class="form-label-item">商品名</span>
@@ -98,7 +94,6 @@
                 </div>
             </div>
 
-            {{-- ブランド --}}
             <div class="form-group">
                 <div class="form-group-title">
                     <span class="form-label-item">ブランド</span>
@@ -115,7 +110,6 @@
                 </div>
             </div>
 
-            {{-- 商品の説明 --}}
             <div class="form-group">
                 <div class="form-group-title">
                     <span class="form-label-item">商品の説明</span>
@@ -132,7 +126,6 @@
                 </div>
             </div>
 
-            {{-- 販売価格 --}}
             <div class="form-group">
                 <div class="form-group-title">
                     <span class="form-label-item">販売価格</span>

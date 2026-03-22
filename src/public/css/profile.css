@@ -1,21 +1,15 @@
-/* profile.css */
 .mypage-content {
     max-width: 1000px;
     margin: 0 auto;
     padding: 40px 20px;
 }
 
-/* ユーザーヘッダー（中央寄せ） */
 .mypage-user-profile {
     display: flex;
     justify-content: center;
-    /* 全体を中央へ */
     align-items: center;
-    /* 上下中央を揃える */
     gap: 40px;
-    /* 要素同士の間隔 */
     margin: 40px 0 60px;
-    /* 上下の余白 */
 }
 
 .mypage-user-info-flex {
@@ -26,7 +20,6 @@
 
 .mypage-user-avatar {
     flex-shrink: 0;
-    /* 円が潰れないように固定 */
     width: 100px;
     height: 100px;
     background-color: #e0e0e0;
@@ -35,12 +28,10 @@
 
 .mypage-user-name {
     font-size: 32px;
-    /* 画像のように大きく */
     font-weight: bold;
     margin: 0;
     color: #000;
     white-space: nowrap;
-    /* 名前が改行されないように */
 }
 
 .mypage-edit-button {
@@ -53,7 +44,6 @@
     font-weight: bold;
 }
 
-/* タブメニュー（横並び） */
 .mypage-tab-menu {
     border-bottom: 1px solid #eee;
     display: flex;
@@ -74,7 +64,6 @@
     border-bottom: 2px solid #ff4d4b;
 }
 
-/* 商品グリッド（縦並びを解消） */
 .mypage-product-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -97,7 +86,6 @@
     display: block;
 }
 
-/* 訪問済みやマウスホバー時も色が変わらないように指定 */
 .mypage-product-link:visited,
 .mypage-product-link:hover,
 .mypage-product-link:active {
@@ -105,7 +93,6 @@
     color: inherit;
 }
 
-/* 商品名のテキストスタイル */
 .mypage-product-name {
     margin-top: 10px;
     font-size: 14px;
@@ -138,22 +125,18 @@
     height: 0;
     border-style: solid;
     border-width: 60px 60px 0 0;
-    /* 三角形のサイズ */
     border-color: #ff4d4b transparent transparent transparent;
     z-index: 1;
 }
 
-/* Soldの文字（斜めに配置） */
 .mypage-sold-text {
     position: absolute;
     top: -55px;
-    /* 三角形の中に収まるよう調整 */
     left: 5px;
     color: white;
     font-weight: bold;
     font-size: 14px;
     transform: rotate(-45deg);
-    /* 文字を傾ける */
     display: block;
     width: 50px;
 }

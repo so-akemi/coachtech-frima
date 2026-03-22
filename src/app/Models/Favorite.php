@@ -10,8 +10,6 @@ class Favorite extends Model
     use HasFactory;
 
     /**
-     * 複数代入可能な属性
-     *
      * @var array<int, string>
      */
     protected $fillable = [
@@ -20,7 +18,6 @@ class Favorite extends Model
     ];
 
     /**
-     * お気に入りしたユーザーを取得
      */
     public function user()
     {
@@ -28,7 +25,6 @@ class Favorite extends Model
     }
 
     /**
-     * お気に入りされた商品を取得
      */
     public function item()
     {

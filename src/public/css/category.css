@@ -1,4 +1,3 @@
-/* カテゴリータグの親コンテナ */
 .form-group-category-grid {
     display: flex;
     flex-wrap: wrap;
@@ -6,12 +5,10 @@
     margin-top: 10px;
 }
 
-/* チェックボックスを隠す */
 .form-input-checkbox {
     display: none;
 }
 
-/* タグの初期状態：赤枠・赤文字 */
 .form-category-tag {
     display: inline-block;
     padding: 6px 18px;
@@ -26,13 +23,11 @@
     background-color: white;
 }
 
-/* チェックされた時の状態：背景が赤・文字が白 */
 .form-input-checkbox:checked+.form-category-name {
     background-color: #ff4d4b;
     color: white;
 }
 
-/* ホバー時の微調整 */
 .form-category-name:hover {
     background-color: rgba(255, 77, 75, 0.1);
 }

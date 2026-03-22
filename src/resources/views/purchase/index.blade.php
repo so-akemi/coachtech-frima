@@ -10,10 +10,11 @@
             <div class="purchase-item-confirm">
                 <div class="purchase-item-info">
                     <div class="purchase-item-image">
-                        @if(str_starts_with($item->image_url, 'http'))
-                            <img src="{{ $item->image_url }}" alt="{{ $item->name }}" class="item-detail-display-image">
+                        @if (str_starts_with($item->image_url, 'http'))
+                            <img src="{{ $item->image_url }}" alt="{{ $item->name }}" class="purchase-display-image">
                         @else
-                            <img src="{{ asset('storage/' . $item->image_url) }}" alt="{{ $item->name }}" class="item-detail-display-image">
+                            <img src="{{ asset('storage/' . $item->image_url) }}" alt="{{ $item->name }}"
+                                class="purchase-display-image">
                         @endif
                     </div>
                     <div class="purchase-item-text">
@@ -30,16 +31,19 @@
                 <div class="form-input-select">
                     <select name="payment_method" id="payment_select" form="buy-form">
                         <option value="">選択してください</option>
-                        @foreach(['コンビニ払い', 'カード払い'] as $method)
+                        @foreach (['コンビニ払い', 'カード払い'] as $method)
                             <option value="{{ $method }}" {{ old('payment_method') == $method ? 'selected' : '' }}>
                                 {{ $method }}
                             </option>
                         @endforeach
                     </select>
                 </div>
-                @error('payment_method')
-                    <p style="color: red; font-size: 0.8rem;">{{ $message }}</p>
-                @enderror
+                <div class="form-error">
+                    @error('payment_method')
+                        {{ $message }}
+                    @enderror
+                </div>
+
             </div>
 
             <div class="purchase-section">
@@ -70,7 +74,8 @@
                     </tr>
                 </table>
 
-                <form action="{{ route('item.buy', ['item_id' => $item->id]) }}" method="POST" id="buy-form" class="purchase-buy-form">
+                <form action="{{ route('item.buy', ['item_id' => $item->id]) }}" method="POST" id="buy-form"
+                    class="purchase-buy-form">
                     @csrf
                     <input type="hidden" name="postal_code" value="{{ $address['postal_code'] }}">
                     <input type="hidden" name="delivery_address" value="{{ $address['address'] }}">
@@ -89,12 +94,10 @@
             const paymentSelect = document.getElementById('payment_select');
             const displayTarget = document.getElementById('display_payment_method');
 
-            // 初期状態の反映（バリデーションエラーで戻ってきた時用）
             if (paymentSelect.value) {
                 displayTarget.textContent = paymentSelect.options[paymentSelect.selectedIndex].text;
             }
 
-            // 選択が変わった時の処理
             paymentSelect.addEventListener('change', function() {
                 const selectedText = paymentSelect.options[paymentSelect.selectedIndex].text;
                 displayTarget.textContent = (paymentSelect.value === "") ? "未選択" : selectedText;

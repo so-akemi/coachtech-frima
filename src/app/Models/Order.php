@@ -10,8 +10,6 @@ class Order extends Model
     use HasFactory;
 
     /**
-     * 複数代入可能な属性
-     *
      * @var array<int, string>
      */
     protected $fillable = [
@@ -23,7 +21,6 @@ class Order extends Model
     ];
 
     /**
-     * 注文したユーザーを取得
      */
     public function user()
     {
@@ -31,7 +28,6 @@ class Order extends Model
     }
 
     /**
-     * 注文された商品を取得
      */
     public function item()
     {

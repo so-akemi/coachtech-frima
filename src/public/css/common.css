@@ -1,8 +1,7 @@
 .header {
     background-color: #000000;
     color: #ffffff;
-    height: 64px;
-    /* 必要に応じて調整 */
+    height: 80px;
     display: flex;
     align-items: center;
     position: sticky;
@@ -12,7 +11,7 @@
 
 .header-inner {
     width: 100%;
-    max-width: 1200px;
+    max-width: 1512px;
     margin: 0 auto;
     padding: 0 20px;
     display: flex;
@@ -21,11 +20,8 @@
 
 .header-logo {
     height: 40px;
-    /* 高さを指定 */
     width: auto;
-    /* 横幅は自動（比率維持） */
     object-fit: contain;
-    /* 枠内に収める */
     display: block;
 }
 
@@ -38,7 +34,6 @@
 .header-center {
     flex: 1;
     margin: 0 40px;
-    /* ロゴとメニューとの間隔 */
 }
 
 .search-input {
@@ -51,7 +46,6 @@
     color: #333;
 }
 
-/* 右側ナビゲーション */
 .header-right {
     display: inline-flex;
     align-items: center;
@@ -68,7 +62,6 @@
     cursor: pointer;
 }
 
-/* 出品ボタン */
 .sell-button {
     background-color: #ffffff;
     color: #000000;

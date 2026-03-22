@@ -1,8 +1,6 @@
-/* register.css */
-
 .register-form-content {
-    max-width: 450px;
-    /* 中央に細長く配置 */
+    max-width: 680px;
+    max-height: 678px;
     margin: 80px auto;
     padding: 0 20px;
 }
@@ -25,7 +23,6 @@
     font-size: 16px;
 }
 
-/* 四角い入力枠 */
 .form-input-text input {
     width: 100%;
     padding: 12px;
@@ -36,7 +33,6 @@
     outline: none;
 }
 
-/* 赤ボタン */
 .form-button-submit {
     width: 100%;
     background-color: #ff4d4b;
@@ -54,7 +50,6 @@
     opacity: 0.8;
 }
 
-/* ログイン画面への遷移リンク */
 .login-button-submit {
     display: block;
     text-decoration: none;
@@ -62,7 +57,6 @@
     cursor: pointer;
     margin-top: 20px;
     color: #007bff;
-    /* リンク色を明示的に指定（必要に応じて変更してください） */
 }
 
 .login-button-submit:hover {

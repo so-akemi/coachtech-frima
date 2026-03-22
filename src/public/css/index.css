@@ -1,6 +1,5 @@
-/* index.css */
 .index-content {
-    max-width: 1200px;
+    max-width: 1512px;
     margin: 0 auto;
     padding: 20px 0;
 }
@@ -13,7 +12,6 @@
     gap: 40px;
 }
 
-/* 共通のタブスタイル */
 .index-tab-item,
 .index-tab-item-active {
     padding: 15px 0;
@@ -24,20 +22,16 @@
     color: #333;
     transition: color 0.3s;
     border-bottom: 2px solid transparent;
-    /* 非アクティブ時は透明な線を引いておく（ガタつき防止） */
 }
 
-/* アクティブ（選択中）のスタイル */
 .index-tab-item-active {
     color: #ff4d4b;
     border-bottom: 2px solid #ff4d4b;
-    /* 赤い下線 */
 }
 
 .index-product-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    /* 4列 */
     gap: 40px;
     padding: 0 50px;
 }
@@ -87,22 +81,18 @@
     height: 0;
     border-style: solid;
     border-width: 60px 60px 0 0;
-    /* 三角形のサイズ */
     border-color: #ff4d4b transparent transparent transparent;
     z-index: 1;
 }
 
-/* Soldの文字（斜めに配置） */
 .index-product-image-container span.index-sold-text {
     position: absolute;
     top: -55px;
-    /* 三角形の中に収まるよう調整 */
     left: 5px;
     color: white;
     font-weight: bold;
     font-size: 14px;
     transform: rotate(-45deg);
-    /* 文字を傾ける */
     display: block;
     width: 50px;
 }

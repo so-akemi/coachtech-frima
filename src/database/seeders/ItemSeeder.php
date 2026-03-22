@@ -19,13 +19,11 @@ class ItemSeeder extends Seeder
      */
     public function run()
     {
-        // 1. 出品者ユーザーの作成
         $seller = User::factory()->create([
             'name'  => '出品者ユーザー',
             'email' => 'seller@example.com',
         ]);
 
-        // 2. 購入者（テストユーザー）の取得と住所リセット
         $buyer = User::where('email', 'test123@example.com')->first();
         if ($buyer) {
             $buyer->update([
@@ -35,7 +33,6 @@ class ItemSeeder extends Seeder
             ]);
         }
 
-        // 3. 商品データリスト
         $items = [
             ["name" => "腕時計", "price" => 15000, "brand" => "Rolax", "description" => "スタイリッシュなデザインのメンズ腕時計", "image_url" => "https://coachtech-matter.s3.ap-northeast-1.amazonaws.com/image/Armani+Mens+Clock.jpg", "condition" => "良好"],
             ["name" => "HDD", "price" => 5000, "brand" => "西芝", "description" => "高速で信頼性の高いハードディスク", "image_url" => "https://coachtech-matter.s3.ap-northeast-1.amazonaws.com/image/HDD+Hard+Disk.jpg", "condition" => "目立った傷や汚れなし"],
@@ -49,9 +46,7 @@ class ItemSeeder extends Seeder
             ["name" => "メイクセット", "price" => 2500, "brand" => null, "description" => "便利なメイクアップセットです。", "image_url" => "https://coachtech-matter.s3.ap-northeast-1.amazonaws.com/image/%E5%A4%96%E5%87%BA%E3%83%A1%E3%82%A4%E3%82%AF%E3%82%A2%E3%83%83%E3%83%95%E3%82%9A%E3%82%BB%E3%83%83%E3%83%88.jpg", "condition" => "目立った傷や汚れなし"],
         ];
 
-        // 4. 商品作成ループ
         foreach ($items as $item) {
-            // メイクセットのみ購入者を出品者にする
             $currentSellerId = ($item['name'] === "メイクセット") ? $buyer->id : $seller->id;
 
             $newItem = Item::create([
@@ -64,7 +59,6 @@ class ItemSeeder extends Seeder
                 "condition"   => $item["condition"],
             ]);
 
-            // 腕時計を購入済み（Order）にする
             if ($newItem->name === "腕時計" && $buyer) {
                 Order::create([
                     'user_id'     => $buyer->id,
@@ -75,7 +69,6 @@ class ItemSeeder extends Seeder
                 ]);
             }
 
-            // 特定の商品をお気に入り登録済みにする
             if (in_array($newItem->name, ["腕時計", "玉ねぎ3束"]) && $buyer) {
                 Favorite::create([
                     'user_id' => $buyer->id,
@@ -84,9 +77,6 @@ class ItemSeeder extends Seeder
             }
         }
 
-        // --- 5. 追加機能データの作成 ---
-
-        // コメントの作成
         $targetItem = Item::first();
         $commentUser = User::where('id', '!=', $targetItem->user_id)->first();
 
@@ -98,10 +88,8 @@ class ItemSeeder extends Seeder
             ]);
         }
 
-        // 複数カテゴリの紐付け
         $categories = Category::take(2)->get();
         if ($targetItem && $categories->count() >= 2) {
-            // 腕時計に最初の2つのカテゴリを紐付け
             $targetItem->categories()->attach($categories->pluck('id'));
         }
     }
