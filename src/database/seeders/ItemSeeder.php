@@ -76,7 +76,7 @@ class ItemSeeder extends Seeder
             }
 
             // 特定の商品をお気に入り登録済みにする
-            if (in_array($newItem->name, ["HDD", "玉ねぎ3束"]) && $buyer) {
+            if (in_array($newItem->name, ["腕時計", "玉ねぎ3束"]) && $buyer) {
                 Favorite::create([
                     'user_id' => $buyer->id,
                     'item_id' => $newItem->id,

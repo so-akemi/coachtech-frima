@@ -90,6 +90,7 @@
 /* 購入ボタン */
 .item-detail-buy-button {
     display: block;
+    width: 100%;
     background-color: #ff4d4b;
     color: white;
     text-align: center;
@@ -99,6 +100,16 @@
     border-radius: 4px;
     margin-bottom: 40px;
     transition: opacity 0.3s;
+    border: none;
+    cursor: pointer;
+    box-sizing: border-box;
+}
+
+/* 購入済み（無効状態） */
+.item-detail-buy-button:disabled {
+    background-color: #ccc;
+    color: #fff;
+    opacity: 1;
 }
 
 .item-detail-buy-button:hover {
@@ -220,13 +231,6 @@
     cursor: pointer;
     transition: opacity 0.3s;
     box-sizing: border-box;
-}
-
-/* 購入済み（無効状態） */
-.item-detail-buy-button-disabled {
-    background-color: #ccc;
-    color: #fff;
-    cursor: not-allowed;
 }
 
 .form-button-submit:hover {

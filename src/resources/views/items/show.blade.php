@@ -11,7 +11,7 @@
                 @if($item->order)
                     <div class="item-sold-badge">Sold</div>
                 @endif
-                
+
                 @if(str_starts_with($item->image_url, 'http'))
                     <img src="{{ $item->image_url }}" alt="{{ $item->name }}" class="item-detail-display-image">
                 @else
@@ -42,7 +42,7 @@
 
                 <div class="item-detail-stat-item">
                     <div class="item-detail-comment-icon-wrapper">
-                        <img src="{{ asset('/img/ふきだしロゴ.png') }}" alt="コメント" class="item-detail-icon">
+                        <img src="{{ asset('/img/ふきだしロゴ.png') }}" alt="コメント" class="item-detail-icon">
                     </div>
                     <p>{{ $item->comments->count() }}</p>
                 </div>
@@ -85,7 +85,7 @@
 
             <section class="item-detail-comment-section">
                 <h2 class="item-detail-section-title">コメント({{ $item->comments->count() }})</h2>
-                
+
                 <div class="item-detail-comment-list">
                     @foreach($item->comments as $comment)
                         <div class="item-detail-comment-item">
@@ -107,7 +107,7 @@
                 <form action="{{ route('comment.store') }}" method="POST" class="item-detail-comment-form" novalidate>
                     @csrf
                     <input type="hidden" name="item_id" value="{{ $item->id }}">
-                    
+
                     <div class="form-group">
                         <div class="form-group-title">
                             <span class="form-label-item">商品へのコメント</span>

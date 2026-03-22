@@ -81,6 +81,16 @@
     gap: 30px;
 }
 
+.mypage-product-card {
+    width: 100%;
+    overflow: hidden;
+}
+
+.mypage-product-card a{
+    text-decoration: none;
+    color: inherit;
+}
+
 .mypage-product-link {
     text-decoration: none;
     color: inherit;

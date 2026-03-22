@@ -23,11 +23,11 @@
         </div>
 
         <div class="mypage-tab-menu">
-            <a href="{{ route('profile.index', ['page' => 'sell']) }}" 
+            <a href="{{ route('profile.index', ['page' => 'sell']) }}"
                class="mypage-tab-item {{ $currentPage !== 'buy' ? 'mypage-tab-item-active' : '' }}">
                 出品した商品
             </a>
-            <a href="{{ route('profile.index', ['page' => 'buy']) }}" 
+            <a href="{{ route('profile.index', ['page' => 'buy']) }}"
                class="mypage-tab-item {{ $currentPage === 'buy' ? 'mypage-tab-item-active' : '' }}">
                 購入した商品
             </a>
@@ -40,12 +40,12 @@
                         <a href="{{ route('item.show', ['item_id' => $item->id]) }}">
                             <div class="mypage-product-image-container">
                                 @if(str_starts_with($item->image_url, 'http'))
-                                    <img src="{{ $item->image_url }}" alt="{{ $item->name }}">
+                                    <img src="{{ $item->image_url }}" alt="{{ $item->name }}" class="mypage-product-image">
                                 @else
-                                    <img src="{{ asset('storage/' . $item->image_url) }}" alt="{{ $item->name }}">
+                                    <img src="{{ asset('storage/' . $item->image_url) }}" alt="{{ $item->name }}" class="mypage-product-image">
                                 @endif
 
-                                @if($item->order) 
+                                @if($item->order)
                                     <div class="mypage-sold-badge">
                                         <span class="mypage-sold-text">Sold</span>
                                     </div>
@@ -63,9 +63,9 @@
                         <a href="{{ route('item.show', ['item_id' => $item->id]) }}">
                             <div class="mypage-product-image-container">
                                 @if(str_starts_with($item->image_url, 'http'))
-                                    <img src="{{ $item->image_url }}" alt="{{ $item->name }}">
+                                    <img src="{{ $item->image_url }}" alt="{{ $item->name }}" class="mypage-product-image">
                                 @else
-                                    <img src="{{ asset('storage/' . $item->image_url) }}" alt="{{ $item->name }}">
+                                    <img src="{{ asset('storage/' . $item->image_url) }}" alt="{{ $item->name }}" class="mypage-product-image">
                                 @endif
                             </div>
                             <p class="mypage-product-name">{{ $item->name }}</p>
