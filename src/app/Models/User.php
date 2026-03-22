@@ -13,7 +13,7 @@ class User extends Authenticatable implements MustVerifyEmail
     use HasApiTokens, HasFactory, Notifiable;
 
     /**
-     * The attributes that are mass assignable.
+     * 複数代入可能な属性
      *
      * @var array<int, string>
      */
@@ -21,15 +21,15 @@ class User extends Authenticatable implements MustVerifyEmail
         'name',
         'email',
         'password',
-        'postal_code',   // 追加
-        'address',       // 追加
-        'building',      // 追加
-        'avatar_path',   // 追加
-        'introduction',  // 追加
+        'postal_code',
+        'address',
+        'building',
+        'avatar_path',
+        'introduction',
     ];
 
     /**
-     * The attributes that should be hidden for serialization.
+     * シリアライズ時に隠蔽する属性
      *
      * @var array<int, string>
      */
@@ -39,7 +39,7 @@ class User extends Authenticatable implements MustVerifyEmail
     ];
 
     /**
-     * The attributes that should be cast.
+     * 属性のキャスト設定
      *
      * @var array<string, string>
      */
@@ -47,12 +47,33 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
     ];
 
-public function favoriteItems()
+    /**
+     * ユーザーが所有する商品一覧を取得（出品）
+     */
+    public function items()
     {
-    // favoritesテーブルを中間テーブルとして、Itemモデルと紐付けます
-    return $this->belongsToMany(Item::class, 'favorites', 'user_id', 'item_id')->withTimestamps();
+        return $this->hasMany(Item::class);
     }
 
+    /**
+     * ユーザーが行った注文一覧を取得
+     */
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
+    }
+
+    /**
+     * ユーザーがお気に入り登録した商品一覧を取得（多対多）
+     */
+    public function favoriteItems()
+    {
+        return $this->belongsToMany(Item::class, 'favorites', 'user_id', 'item_id')->withTimestamps();
+    }
+
+    /**
+     * ユーザーが投稿したコメント一覧を取得
+     */
     public function comments()
     {
         return $this->hasMany(Comment::class);

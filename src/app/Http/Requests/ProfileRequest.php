@@ -24,22 +24,19 @@ class ProfileRequest extends FormRequest
     public function rules()
     {
         return [
-            // 設計書: 拡張子が .jpeg もしくは .png
             'image'       => ['nullable', 'image', 'mimes:jpeg,png'],
-            
-            // 設計書: 入力必須、20文字以内
             'user_name'   => ['required', 'string', 'max:20'],
-            
-            // 設計書: 入力必須、ハイフンありの8文字
             'postal_code' => ['required', 'string', 'size:8', 'regex:/^\d{3}-\d{4}$/'],
-            
-            // 設計書: 入力必須
             'address'     => ['required', 'string', 'max:255'],
-            
             'building'    => ['nullable', 'string', 'max:255'],
         ];
     }
 
+    /**
+     * Get the validation error messages.
+     *
+     * @return array
+     */
     public function messages()
     {
         return [

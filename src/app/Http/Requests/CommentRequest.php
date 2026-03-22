@@ -27,14 +27,18 @@ class CommentRequest extends FormRequest
             'item_id' => ['required', 'exists:items,id'],
             'content' => ['required', 'string', 'max:255'],
         ];
-        
     }
 
+    /**
+     * Get the validation error messages.
+     *
+     * @return array
+     */
     public function messages()
     {
         return [
             'content.required' => '商品コメントを入力してください',
-            'content.max' => '255文字以内で入力してください',
+            'content.max'      => '255文字以内で入力してください',
         ];
     }
 }

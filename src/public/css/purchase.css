@@ -1,5 +1,5 @@
 /* purchase.css */
-.purchase__container {
+.purchase-container {
     display: flex;
     justify-content: space-between;
     max-width: 1100px;
@@ -9,39 +9,39 @@
 }
 
 /* 左側：商品・支払い・住所 */
-.purchase__left {
+.purchase-left {
     flex: 1.5;
 }
 
-.purchase__item-confirm,
-.purchase__section {
+.purchase-item-confirm,
+.purchase-section {
     border-bottom: 1px solid #ddd;
     padding: 30px 0;
 }
 
-.purchase__item-info {
+.purchase-item-info {
     display: flex;
     align-items: center;
     gap: 40px;
 }
 
-.purchase__item-image img {
+.purchase-item-image {
     width: 180px;
     height: 180px;
     object-fit: cover;
 }
 
-.purchase__item-name {
+.purchase-item-name {
     font-size: 24px;
     font-weight: bold;
     margin-bottom: 10px;
 }
 
-.purchase__item-price {
+.purchase-item-price {
     font-size: 20px;
 }
 
-.purchase__section-title h3 {
+.purchase-section-title h3 {
     font-size: 18px;
     font-weight: bold;
     margin-bottom: 20px;
@@ -49,7 +49,7 @@
 }
 
 /* 支払い方法セレクトボックス */
-.form__input--select select {
+.form-input-select select {
     width: 100%;
     padding: 12px;
     border: 1px solid #d1d1d1;
@@ -59,52 +59,52 @@
     outline: none;
 }
 
-.purchase__address-header {
+.purchase-address-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 15px;
 }
 
-.purchase__change-link {
+.purchase-change-link {
     color: #007bff;
     text-decoration: none;
     font-size: 14px;
 }
 
 /* 右側：決済ボックス */
-.purchase__right {
+.purchase-right {
     flex: 1;
     min-width: 350px;
 }
 
-.purchase__summary-box {
+.purchase-summary-box {
     border: 1px solid #ddd;
     padding: 30px;
     position: sticky;
     top: 20px;
 }
 
-.purchase__summary-table {
+.purchase-summary-table {
     width: 100%;
     margin-bottom: 30px;
     border-collapse: collapse;
 }
 
-.purchase__summary-table th,
-.purchase__summary-table td {
+.purchase-summary-table th,
+.purchase-summary-table td {
     padding: 15px 0;
     text-align: left;
     font-size: 16px;
 }
 
-.purchase__summary-table td {
+.purchase-summary-table td {
     text-align: right;
     font-weight: bold;
 }
 
 /* 購入ボタン */
-.form__button-submit {
+.form-button-submit {
     width: 100%;
     background-color: #ff4d4b;
     color: white;

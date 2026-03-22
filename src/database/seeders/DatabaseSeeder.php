@@ -13,11 +13,10 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\User::factory(10)->create();
         $this->call([
-            UserSeeder::class,
-            ItemSeeder::class,
-            CategoriesTableSeeder::class,
+            UserSeeder::class,           // 1. まずユーザーを作成
+            CategoriesTableSeeder::class, // 2. 次にマスターデータ（カテゴリー）を作成
+            ItemSeeder::class,           // 3. 最後にユーザーとカテゴリーを紐付けた商品を作成
         ]);
     }
 }

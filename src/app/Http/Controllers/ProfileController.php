@@ -18,21 +18,19 @@ class ProfileController extends Controller
         // 現在のタブを取得（デフォルトは 'sell'）
         $currentPage = $request->query('page', 'sell');
 
-        // 1. 最初になんでもいいので「空のコレクション」として初期化しておく
+        // コレクションの初期化
         $sellItems = collect();
         $buyItems = collect();
 
-        // 2. 条件に応じて中身を上書きする
+        // 表示モードに応じたデータ取得
         if ($currentPage === 'buy') {
-        $buyItems = \App\Models\Item::whereHas('order', function ($query) use ($user) {
-            $query->where('user_id', $user->id);
-        })->get();
+            $buyItems = Item::whereHas('order', function ($query) use ($user) {
+                $query->where('user_id', $user->id);
+            })->get();
         } else {
-        // 出品した商品の取得
-        $sellItems = \App\Models\Item::where('user_id', $user->id)->get();
+            $sellItems = Item::where('user_id', $user->id)->get();
         }
 
-        // 3. ここで compact に渡す。初期化してあるので必ず変数が存在する。
         return view('profile.index', compact('user', 'sellItems', 'buyItems', 'currentPage'));
     }
 
@@ -41,15 +39,13 @@ class ProfileController extends Controller
      */
     public function edit()
     {
-        // 現在ログインしているユーザー情報を取得
         $user = auth()->user();
 
-        // もしメール認証がまだなら、誘導画面へ飛ばす（以前入れたループ防止処理）
+        // 未認証ユーザーのガード
         if (!$user->hasVerifiedEmail()) {
-        return redirect()->route('verification.notice');
+            return redirect()->route('verification.notice');
         }
 
-        // 画面（view）を表示する際に、compact('user') で変数を渡す
         return view('profile.edit', compact('user'));
     }
 
@@ -60,12 +56,13 @@ class ProfileController extends Controller
     {
         $user = Auth::user();
 
-        // 画像の処理
+        // 画像の保存処理
         if ($request->hasFile('image')) {
             // 古い画像があれば削除
             if ($user->image_url) {
                 Storage::disk('public')->delete($user->image_url);
             }
+
             $path = $request->file('image')->store('profiles', 'public');
             $user->image_url = $path;
         }
@@ -80,7 +77,6 @@ class ProfileController extends Controller
 
         $user->save();
 
-        // 更新後はトップページ（商品一覧）へ
         return redirect('/')->with('message', 'プロフィールを更新しました');
     }
 }

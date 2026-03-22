@@ -30,7 +30,7 @@
 `php artisan storage:link`
 
 ### データベース接続設定と構築
-####  .envファイルの設定  
+####  .envファイルの設定(srcディレクトリ直下)  
 
 - データベース接続設定(下記の通り修正)  
     ```
@@ -42,12 +42,24 @@
     DB_PASSWORD=laravel_pass
     ```
 
+- メール認証機能の設定(MAIL_FROM_ADDRESSを修正)
+    ```
+    MAIL_MAILER=smtp
+    MAIL_HOST=mailhog
+    MAIL_PORT=1025
+    MAIL_USERNAME=null
+    MAIL_PASSWORD=null
+    MAIL_ENCRYPTION=null
+    MAIL_FROM_ADDRESS=admin@example.com
+    MAIL_FROM_NAME="${APP_NAME}"
+    ```
+
 - 決済機能（stripe）の設定  
      本アプリの動作確認には、Stripeのテスト用APIキーが必要です。
      [Stripeダッシュボード※要ログイン](https://dashboard.stripe.com/test/apikeys)から取得したキーを、以下の項目に設定してください。
     ```  
-     STRIPE_KEY=pk_test_...（ご自身の公開鍵を貼り付け）  
-     STRIPE_SECRET=sk_test_...（ご自身の秘密鍵を貼り付け）
+     STRIPE_PUBLIC_KEY=pk_test_...（ご自身の公開鍵を貼り付け）  
+     STRIPE_SECRET_KEY=sk_test_...（ご自身の秘密鍵を貼り付け）
     ```
 
 
@@ -112,3 +124,5 @@ php artisan db:seed 実行後、以下のユーザーで即座に動作確認が
 
 - メールアドレス：test123@example.com
 - パスワード：coachtech123test
+- 郵便番号：123-4567
+- 住所：東京都渋谷区テスト123

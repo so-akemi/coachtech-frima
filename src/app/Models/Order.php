@@ -9,16 +9,32 @@ class Order extends Model
 {
     use HasFactory;
 
+    /**
+     * 複数代入可能な属性
+     *
+     * @var array<int, string>
+     */
     protected $fillable = [
         'user_id',
         'item_id',
         'postal_code',
         'address',
-        'building'
-        ];
+        'building',
+    ];
 
+    /**
+     * 注文したユーザーを取得
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    /**
+     * 注文された商品を取得
+     */
     public function item()
     {
-     return $this->belongsTo(Item::class);
+        return $this->belongsTo(Item::class);
     }
 }

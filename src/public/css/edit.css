@@ -1,18 +1,18 @@
 /* edit.css */
-.profile-edit__content {
+.profile-edit-content {
     max-width: 600px;
     margin: 50px auto;
     padding: 0 20px;
 }
 
-.profile-edit__heading h1 {
+.profile-edit-heading h1 {
     font-size: 24px;
     font-weight: bold;
     text-align: center;
     margin-bottom: 50px;
 }
 
-.form__user-avatar {
+.form-user-avatar {
     display: flex;
     /* 横並びにする */
     align-items: center;
@@ -23,7 +23,7 @@
     /* 下の入力項目との余白 */
 }
 
-.form__avatar-circle {
+.form-avatar-circle {
     width: 100px;
     height: 100px;
     border-radius: 50%;
@@ -32,13 +32,13 @@
     overflow: hidden;
 }
 
-.form__avatar-img {
+.form-avatar-img {
     width: 100%;
     height: 100%;
     object-fit: cover;
 }
 
-.form__label--file {
+.form-label-file {
     display: inline-block;
     padding: 8px 16px;
     border: 1px solid #ff4d4b;
@@ -49,15 +49,15 @@
     cursor: pointer;
 }
 
-.form__label--file input[type="file"] {
+.form-label-file input[type="file"] {
     display: none;
 }
 
-.form__group {
+.form-group {
     margin-bottom: 30px;
 }
 
-.form__label--item {
+.form-label-item {
     display: block;
     font-weight: bold;
     margin-bottom: 10px;
@@ -65,7 +65,7 @@
 }
 
 /* プロフィール編集用の下線スタイル */
-.form__input--text input {
+.form-input-text input {
     width: 100%;
     border: none;
     border-bottom: 1px solid #ccc;
@@ -74,11 +74,11 @@
     outline: none;
 }
 
-.form__input--text input:focus {
+.form-input-text input:focus {
     border-bottom: 1px solid #ff4d4b;
 }
 
-.form__button-submit {
+.form-button-submit {
     width: 100%;
     background-color: #ff4d4b;
     color: white;
@@ -91,6 +91,6 @@
     margin-top: 20px;
 }
 
-.form__error {
+.form-error {
     color: red;
 }

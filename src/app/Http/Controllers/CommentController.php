@@ -9,16 +9,19 @@ use App\Http\Requests\CommentRequest;
 
 class CommentController extends Controller
 {
+    /**
+     * コメントの保存処理
+     */
     public function store(CommentRequest $request)
     {
-        // 2. データベースへ保存
+        // データベースへ保存
         Comment::create([
             'item_id' => $request->item_id,
-            'user_id' => Auth::id(), // ログイン中のユーザーID
+            'user_id' => Auth::id(),
             'content' => $request->content,
         ]);
 
-        // 3. 元の商品詳細ページへ戻る
+        // 元の商品詳細ページへ戻る
         return back()->with('message', 'コメントを投稿しました');
     }
 }

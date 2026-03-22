@@ -5,44 +5,45 @@
 @endsection
 
 @section('content')
-<div class="index__content">
-    <div class="index__tab-menu">
-        <!-- tabパラメータがない、または 'index' の時に赤くなる -->
-        <a href="{{ route('item.index', ['tab' => 'recommend','keyword' => request('keyword')]) }}" 
-           class="{{$tab !== 'mylist' ? 'index__tab-item--active' : 'index__tab-item' }}">
-           おすすめ
-        </a>
-        
-        <!-- tabパラメータが 'mylist' の時に赤くなる -->
-        <a href="{{ route('item.index', ['tab' => 'mylist', 'keyword' => request('keyword')]) }}" 
-         class="{{ $tab === 'mylist' ? 'index__tab-item--active' : 'index__tab-item' }}">
-           マイリスト
-        </a>
-    </div>
-
-    <div class="index__product-grid">
-        @foreach($items as $item)
-            <a href="{{ route('item.show', ['item_id' => $item->id]) }}" class="index__product-card">
-                <div class="index__product-image-container">
-                    @if($item->image_url)
-                    <!-- 条件分岐を追加：httpで始まればそのまま、そうでなければstorageから取得 -->
-                      @if(str_starts_with($item->image_url, 'http'))
-                         <img src="{{ $item->image_url }}" alt="{{ $item->name }}" class="index__product-image">
-                      @else
-                         <img src="{{ asset('storage/' . $item->image_url) }}" alt="{{ $item->name }}" class="index__product-image">
-                      @endif
-                      @else
-                         <span>商品画像</span>
-                    @endif
-                    @if($item->order) 
-                        <div class="index__sold-badge">
-                          <span class="index__sold-text">Sold</span>
-                        </div>
-                    @endif
-                </div>
-                <p class="index__product-name">{{ $item->name }}</p>
+    <div class="index-content">
+        <div class="index-tab-menu">
+            <a href="{{ route('item.index', ['tab' => 'recommend', 'keyword' => request('keyword')]) }}" 
+               class="{{ $tab !== 'mylist' ? 'index-tab-item-active' : 'index-tab-item' }}">
+                おすすめ
             </a>
-        @endforeach
+            
+            <a href="{{ route('item.index', ['tab' => 'mylist', 'keyword' => request('keyword')]) }}" 
+               class="{{ $tab === 'mylist' ? 'index-tab-item-active' : 'index-tab-item' }}">
+                マイリスト
+            </a>
+        </div>
+
+        <div class="index-product-grid">
+            @foreach($items as $item)
+                <a href="{{ route('item.show', ['item_id' => $item->id]) }}" class="index-product-card">
+                    <div class="index-product-image-container">
+                        @if($item->image_url)
+                            @if(str_starts_with($item->image_url, 'http'))
+                                <img src="{{ $item->image_url }}" alt="{{ $item->name }}" class="index-product-image">
+                            @else
+                                <img src="{{ asset('storage/' . $item->image_url) }}" alt="{{ $item->name }}" class="index-product-image">
+                            @endif
+                        @else
+                            <div class="index-product-no-image">
+                                <span>商品画像</span>
+                            </div>
+                        @endif
+
+                        @if($item->order) 
+                            <div class="index-sold-badge">
+                                <span class="index-sold-text">Sold</span>
+                            </div>
+                        @endif
+                    </div>
+                    
+                    <p class="index-product-name">{{ $item->name }}</p>
+                </a>
+            @endforeach
+        </div>
     </div>
-</div>
 @endsection

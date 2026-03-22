@@ -21,21 +21,23 @@ class PurchaseRequest extends FormRequest
      *
      * @return array
      */
-
     public function rules()
     {
         return [
-            // 設計書より：選択必須
-            'payment_method' => ['required', 'string'],
-            // 設計書より：選択必須（住所が未登録でないか等のチェック）
+            'payment_method'   => ['required', 'string'],
             'delivery_address' => ['required', 'string'],
         ];
     }
 
+    /**
+     * Get the validation error messages.
+     *
+     * @return array
+     */
     public function messages()
     {
         return [
-            'payment_method.required' => '支払い方法を選択してください',
+            'payment_method.required'   => '支払い方法を選択してください',
             'delivery_address.required' => '配送先を選択してください',
         ];
     }

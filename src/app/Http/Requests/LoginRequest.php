@@ -24,26 +24,34 @@ class LoginRequest extends FortifyLoginRequest
     public function rules()
     {
         return [
-            // 設計書より：入力必須、メールアドレス形式
-            'email' => ['required', 'string', 'email'],
-            // 設計書より：入力必須、8文字以上
+            'email'    => ['required', 'string', 'email'],
             'password' => ['required', 'string'],
         ];
     }
 
+    /**
+     * Get custom attributes for validator errors.
+     *
+     * @return array
+     */
     public function attributes()
     {
         return [
-            'email' => 'メールアドレス',
+            'email'    => 'メールアドレス',
             'password' => 'パスワード',
         ];
     }
 
+    /**
+     * Get the validation error messages.
+     *
+     * @return array
+     */
     public function messages()
     {
         return [
-            'email.required' => 'メールアドレスを入力してください',
-            'email.email' => '有効なメールアドレスを入力してください',
+            'email.required'    => 'メールアドレスを入力してください',
+            'email.email'       => '有効なメールアドレスを入力してください',
             'password.required' => 'パスワードを入力してください',
         ];
     }

@@ -1,23 +1,23 @@
 /* address.css */
-.address__content {
+.address-content {
     max-width: 450px;
     /* 画像のように中央に細長く配置 */
     margin: 80px auto;
     padding: 0 20px;
 }
 
-.address__heading h1 {
+.address-heading h1 {
     font-size: 24px;
     font-weight: bold;
     text-align: center;
     margin-bottom: 60px;
 }
 
-.form__group {
+.form-group {
     margin-bottom: 30px;
 }
 
-.form__label--item {
+.form-label-item {
     display: block;
     font-weight: bold;
     margin-bottom: 10px;
@@ -25,7 +25,7 @@
 }
 
 /* 1枚目画像のような四角い入力枠 */
-.form__input--text input {
+.form-input-text input {
     width: 100%;
     padding: 12px;
     border: 1px solid #d1d1d1;
@@ -36,7 +36,7 @@
 }
 
 /* 1枚目画像のようなパキッとした赤ボタン */
-.form__button-submit {
+.form-button-submit {
     width: 100%;
     background-color: #ff4d4b;
     color: white;
@@ -49,6 +49,6 @@
     margin-top: 40px;
 }
 
-.form__button-submit:hover {
+.form-button-submit:hover {
     opacity: 0.8;
 }

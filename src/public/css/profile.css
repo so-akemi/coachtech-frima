@@ -1,12 +1,12 @@
 /* profile.css */
-.mypage__content {
+.mypage-content {
     max-width: 1000px;
     margin: 0 auto;
     padding: 40px 20px;
 }
 
 /* ユーザーヘッダー（中央寄せ） */
-.mypage__user-profile {
+.mypage-user-profile {
     display: flex;
     justify-content: center;
     /* 全体を中央へ */
@@ -18,32 +18,32 @@
     /* 上下の余白 */
 }
 
-.mypage__user-info-flex {
+.mypage-user-info-flex {
     display: flex;
     align-items: center;
     gap: 40px;
 }
 
-.mypage__user-avatar {
+.mypage-user-avatar {
     flex-shrink: 0;
-        /* 円が潰れないように固定 */
-        width: 100px;
-        height: 100px;
-        background-color: #e0e0e0;
-        border-radius: 50%;
+    /* 円が潰れないように固定 */
+    width: 100px;
+    height: 100px;
+    background-color: #e0e0e0;
+    border-radius: 50%;
 }
 
-.mypage__user-name {
+.mypage-user-name {
     font-size: 32px;
     /* 画像のように大きく */
     font-weight: bold;
     margin: 0;
     color: #000;
     white-space: nowrap;
-        /* 名前が改行されないように */
+    /* 名前が改行されないように */
 }
 
-.mypage__edit-button {
+.mypage-edit-button {
     display: inline-block;
     padding: 8px 20px;
     border: 1px solid #ff4d4b;
@@ -54,14 +54,14 @@
 }
 
 /* タブメニュー（横並び） */
-.mypage__tab-menu {
+.mypage-tab-menu {
     border-bottom: 1px solid #eee;
     display: flex;
     gap: 40px;
     margin-bottom: 30px;
 }
 
-.mypage__tab-item {
+.mypage-tab-item {
     text-decoration: none;
     color: #333;
     font-weight: bold;
@@ -69,42 +69,42 @@
     font-size: 16px;
 }
 
-.mypage__tab-item--active {
+.mypage-tab-item-active {
     color: #ff4d4b;
     border-bottom: 2px solid #ff4d4b;
 }
 
 /* 商品グリッド（縦並びを解消） */
-.mypage__product-grid {
+.mypage-product-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 30px;
 }
 
-.mypage__product-card a {
+.mypage-product-link {
     text-decoration: none;
     color: inherit;
     display: block;
 }
 
 /* 訪問済みやマウスホバー時も色が変わらないように指定 */
-.mypage__product-card a:visited,
-.mypage__product-card a:hover,
-.mypage__product-card a:active {
+.mypage-product-link:visited,
+.mypage-product-link:hover,
+.mypage-product-link:active {
     text-decoration: none;
     color: inherit;
 }
 
 /* 商品名のテキストスタイル */
-.mypage__product-name {
+.mypage-product-name {
     margin-top: 10px;
     font-size: 14px;
     color: #333;
-    /* リンクの青ではなく、任意の文字色を指定 */
     text-decoration: none;
 }
 
-.mypage__product-image-container {
+.mypage-product-image-container {
+    position: relative;
     aspect-ratio: 1 / 1;
     background-color: #f0f0f0;
     margin-bottom: 10px;
@@ -114,8 +114,36 @@
     overflow: hidden;
 }
 
-.mypage__product-image-container img {
+.mypage-product-image {
     width: 100%;
     height: 100%;
     object-fit: cover;
+}
+
+.mypage-sold-badge {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 60px 60px 0 0;
+    /* 三角形のサイズ */
+    border-color: #ff4d4b transparent transparent transparent;
+    z-index: 1;
+}
+
+/* Soldの文字（斜めに配置） */
+.mypage-sold-text {
+    position: absolute;
+    top: -55px;
+    /* 三角形の中に収まるよう調整 */
+    left: 5px;
+    color: white;
+    font-weight: bold;
+    font-size: 14px;
+    transform: rotate(-45deg);
+    /* 文字を傾ける */
+    display: block;
+    width: 50px;
 }

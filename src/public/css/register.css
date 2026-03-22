@@ -1,30 +1,32 @@
-.register-form__content {
+/* register.css */
+
+.register-form-content {
     max-width: 450px;
-    /* 画像のように中央に細長く配置 */
+    /* 中央に細長く配置 */
     margin: 80px auto;
     padding: 0 20px;
 }
 
-.register-form__heading h1 {
+.register-form-heading h1 {
     font-size: 24px;
     font-weight: bold;
     text-align: center;
     margin-bottom: 60px;
 }
 
-.form__group {
+.form-group {
     margin-bottom: 30px;
 }
 
-.form__label--item {
+.form-label-item {
     display: block;
     font-weight: bold;
     margin-bottom: 10px;
     font-size: 16px;
 }
 
-/* 1枚目画像のような四角い入力枠 */
-.form__input--text input {
+/* 四角い入力枠 */
+.form-input-text input {
     width: 100%;
     padding: 12px;
     border: 1px solid #d1d1d1;
@@ -34,8 +36,8 @@
     outline: none;
 }
 
-/* 1枚目画像のようなパキッとした赤ボタン */
-.form__button-submit {
+/* 赤ボタン */
+.form-button-submit {
     width: 100%;
     background-color: #ff4d4b;
     color: white;
@@ -48,22 +50,25 @@
     margin-top: 40px;
 }
 
-.form__button-submit:hover {
+.form-button-submit:hover {
     opacity: 0.8;
 }
 
-a.login__button-submit {
+/* ログイン画面への遷移リンク */
+.login-button-submit {
     display: block;
     text-decoration: none;
     text-align: center;
     cursor: pointer;
     margin-top: 20px;
+    color: #007bff;
+    /* リンク色を明示的に指定（必要に応じて変更してください） */
 }
 
-a.login__button-submit:hover {
+.login-button-submit:hover {
     opacity: 0.8;
 }
 
-.form__error {
+.form-error {
     color: red;
 }

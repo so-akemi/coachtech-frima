@@ -1,24 +1,24 @@
 /* create.css */
 
 /* コンテナ全体のレイアウト */
-.create-form__content {
+.create-form-content {
     max-width: 700px;
     margin: 40px auto;
     padding: 0 20px;
 }
 
-.create-form__heading h1 {
+.create-form-heading h1 {
     font-size: 24px;
     font-weight: bold;
     text-align: center;
     margin-bottom: 40px;
 }
 
-.form__group {
+.form-group {
     margin-bottom: 30px;
 }
 
-.form__label--item {
+.form-label-item {
     display: block;
     font-weight: bold;
     margin-bottom: 15px;
@@ -26,13 +26,11 @@
 }
 
 /* --- 画像のような点線枠のアップロードエリア --- */
-.form__image-upload-wrapper {
+.form-image-upload-wrapper {
     width: 100%;
     aspect-ratio: 16 / 9;
-    /* 正方形か長方形か、お好みで調整 */
     background-color: #ffffff;
     border: 2px dashed #d1d1d1;
-    /* グレーの点線枠 */
     border-radius: 4px;
     display: flex;
     align-items: center;
@@ -40,64 +38,46 @@
     box-sizing: border-box;
 }
 
-/* 画像のような赤い枠線と赤文字のボタン風スタイル */
-.form__image-upload-button {
+.form-image-upload-button {
     display: inline-block;
     padding: 8px 18px;
     border: 1px solid #ff4d4b;
-    /* 赤い枠線 */
     color: #ff4d4b;
-    /* 赤い文字 */
     font-weight: bold;
     border-radius: 20px;
-    /* 画像のように丸く */
     font-size: 14px;
     cursor: pointer;
     background-color: #ffffff;
 }
 
-.form__image-upload-button:hover {
+.form-image-upload-button:hover {
     background-color: rgba(255, 77, 75, 0.1);
-    /* ホバー時にうっすら赤く */
 }
 
-/* 実際のファイル入力を隠す（デザイン優先のため） */
-.form__input--file-hidden {
+/* 実際のファイル入力を隠す */
+.form-input-file-hidden {
     display: none;
 }
 
-/* セクションの区切りタイトル（商品の詳細、商品名と説明） */
-.form__group-section-title {
+/* セクションの区切りタイトル */
+.form-group-section-title {
     margin-top: 40px;
     margin-bottom: 20px;
     border-bottom: 1px solid #333;
-    /* 下線で区切り */
     padding-bottom: 8px;
 }
 
-.form__group-section-title h2 {
+.form-group-section-title h2 {
     font-size: 18px;
     font-weight: bold;
     margin: 0;
     color: #333;
 }
 
-/* 各入力項目のグループ */
-.form__group {
-    margin-bottom: 25px;
-}
-
-.form__label--item {
-    display: block;
-    font-weight: bold;
-    margin-bottom: 10px;
-    font-size: 16px;
-}
-
 /* 入力欄：四角い枠線の共通スタイル */
-.form__input--text input,
-.form__input--select select,
-.form__input--textarea textarea {
+.form-input-text input,
+.form-input-select select,
+.form-input-textarea textarea {
     width: 100%;
     padding: 12px;
     border: 1px solid #d1d1d1;
@@ -108,48 +88,47 @@
 }
 
 /* 商品の説明（テキストエリア）の高さ */
-.form__input--textarea textarea {
+.form-input-textarea textarea {
     height: 150px;
     resize: vertical;
 }
 
 /* 価格入力欄（¥マーク付き） */
-.form__input--price {
+.form-input-price {
     position: relative;
     display: flex;
     align-items: center;
 }
 
-.form__currency {
+.form-currency {
     position: absolute;
     left: 12px;
     font-size: 16px;
     color: #333;
 }
 
-.form__input--price input {
+.form-input-price input {
     width: 100%;
     padding: 12px 12px 12px 30px;
-    /* 左側に¥マーク分の余白 */
     border: 1px solid #d1d1d1;
     border-radius: 4px;
     font-size: 16px;
 }
 
 /* ファイル選択ボタンの装飾 */
-.form__input--file-box {
+.form-input-file-box {
     margin-top: 5px;
 }
 
 /* エラーメッセージ */
-.form__error {
+.form-error {
     color: #ff4d4b;
     font-size: 12px;
     margin-top: 5px;
 }
 
 /* 出品ボタン */
-.form__button-submit {
+.form-button-submit {
     width: 100%;
     background-color: #ff4d4b;
     color: white;
@@ -163,14 +142,14 @@
     transition: opacity 0.3s;
 }
 
-.form__button-submit:hover {
+.form-button-submit:hover {
     opacity: 0.8;
 }
 
-/* カテゴリー選択用（HTMLのクラス名に合わせました） */
+/* カテゴリー選択用 */
 
 /* 外側のコンテナ：要素を横並びにして折り返す */
-.form__group-category-grid {
+.form-group-category-grid {
     display: flex;
     flex-wrap: wrap;
     gap: 12px;
@@ -178,37 +157,32 @@
 }
 
 /* 実際のチェックボックスを隠す */
-.form__input--checkbox {
+.form-input-checkbox {
     display: none;
 }
 
 /* ラベル兼タグの見た目（未選択時） */
-.form__category-name {
+.form-category-name {
     display: inline-block;
     padding: 6px 20px;
     border: 1px solid #ff4d4b;
-    /* 赤い枠線 */
     color: #ff4d4b;
-    /* 赤い文字 */
     border-radius: 20px;
-    /* 角丸（カプセル型） */
     cursor: pointer;
     font-weight: bold;
     font-size: 14px;
     background-color: #fff;
     transition: all 0.3s ease;
     user-select: none;
-    /* 文字選択を防ぐ */
 }
 
 /* チェックが入った時の見た目（選択時：背景赤・文字白） */
-/* 隣接セレクタ(+)を使って、チェックされた直後のspanを装飾 */
-.form__input--checkbox:checked+.form__category-name {
+.form-input-checkbox:checked+.form-category-name {
     background-color: #ff4d4b;
     color: #ffffff;
 }
 
 /* ホバーした時に少しだけ背景を赤らめる */
-.form__category-name:hover {
+.form-category-name:hover {
     background-color: rgba(255, 77, 75, 0.05);
 }

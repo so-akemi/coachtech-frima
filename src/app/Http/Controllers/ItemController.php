@@ -14,65 +14,67 @@ use Illuminate\Support\Facades\Auth;
 
 class ItemController extends Controller
 {
-    public function index(Request $request) {
+    public function index(Request $request) 
+    {
         $keyword = $request->get('keyword');
-    $user = auth()->user();
-    
-    // URLに 'tab' があればその値を使い、なければ 'mylist' か 'recommend' を自動決定する
-    // ※ ログイン直後（パラメータなし）は自動的に 'mylist' になります
-    $tab = $request->get('tab', $user ? 'mylist' : 'recommend');
+        $user = auth()->user();
+        
+        // タブの自動決定
+        $tab = $request->get('tab', $user ? 'mylist' : 'recommend');
 
-    $query = Item::query();
+        $query = Item::query();
 
-    // 検索
-    if ($keyword) {
-        $query->where('name', 'like', '%' . $keyword . '%');
-    }
-
-    if ($tab === 'mylist') {
-        // マイリスト表示
-        $items = $user ? $user->favoriteItems()->where('items.name', 'like', '%' . $keyword . '%')->get() : collect();
-    } else {
-        // おすすめ表示
-        if ($user) {
-            $query->where('user_id', '!=', $user->id);
+        // 検索フィルタリング
+        if ($keyword) {
+            $query->where('name', 'like', '%' . $keyword . '%');
         }
-        $items = $query->get();
+
+        // 表示データの取得
+        if ($tab === 'mylist') {
+            $items = $user ? $user->favoriteItems()->where('items.name', 'like', '%' . $keyword . '%')->get() : collect();
+        } else {
+            if ($user) {
+                $query->where('user_id', '!=', $user->id);
+            }
+            $items = $query->get();
+        }
+
+        return view('items.index', compact('items', 'tab'));
     }
 
-    return view('items.index', compact('items', 'tab'));
-}
-
-    public function show($item_id) {
+    public function show($item_id) 
+    {
         $item = Item::with('categories')->findOrFail($item_id);
+
         return view('items.show', compact('item'));
     }
     
-    public function purchase($item_id) {
+    public function purchase($item_id) 
+    {
         $item = Item::with('categories')->findOrFail($item_id);
 
-        // 1. セッションに一時保存された住所があるか確認
-        // なければ、ログインユーザーのデフォルト住所を使う
+        // セッションまたはデフォルト住所の取得
         $address = session("address_for_item_{$item_id}") ?? [
-          'postal_code' => auth()->user()->postal_code ?? '', // ユーザーの郵便番号、なければ空文字
-          'address'     => auth()->user()->address ?? '', // ユーザーの住所、なければ空文字
-          'building'    => auth()->user()->building ?? '', // ユーザーの建物名、なければ空文字
+            'postal_code' => auth()->user()->postal_code ?? '',
+            'address'     => auth()->user()->address ?? '',
+            'building'    => auth()->user()->building ?? '',
         ];
 
-        // 2. viewに $item と $address の両方を渡す
         return view('purchase.index', compact('item', 'address'));
     }
 
-    public function editAddress($item_id) {
+    public function editAddress($item_id) 
+    {
         $item = Item::findOrFail($item_id);
+
         return view('purchase.address', compact('item'));
     }
 
-    public function updateAddress(AddressRequest $request, $item_id) {
-        // 入力値をセッションに保存（'address_item_1' のように商品IDをキーにすると確実）
+    public function updateAddress(AddressRequest $request, $item_id) 
+    {
+        // 入力値をセッションに保存
         session(["address_for_item_{$item_id}" => $request->only(['postal_code', 'address', 'building'])]);
-        // ここで住所の更新処理を実装（例: ユーザーの住所情報を保存するなど）
-        // 一旦、画面を戻す処理だけ書きます
+
         return redirect()->route('item.purchase', ['item_id' => $item_id]);
     }
 
@@ -80,15 +82,14 @@ class ItemController extends Controller
     {
         $item = Item::findOrFail($item_id);
 
-        // 既に売り切れていないかチェック
+        // 在庫チェック
         if (Order::where('item_id', $item_id)->exists()) {
             return back()->with('error', 'この商品は既に売り切れています。');
         }
 
-        // Stripeのシークレットキーを設定
+        // Stripe決済準備
         Stripe::setApiKey(config('services.stripe.secret'));
 
-        // Stripe Checkoutセッションの作成
         $checkout_session = Session::create([
             'payment_method_types' => ['card', 'konbini'],
             'line_items' => [[
@@ -102,10 +103,8 @@ class ItemController extends Controller
                 'quantity' => 1,
             ]],
             'mode' => 'payment',
-            // 決済完了後のリダイレクト先（ successメソッドへ ）
             'success_url' => route('payment.success', ['item_id' => $item->id]) . '?session_id={CHECKOUT_SESSION_ID}',
             'cancel_url' => route('item.purchase', ['item_id' => $item->id]),
-            // 成功した時にDBに保存したい情報を metadata に隠し持つ
             'metadata' => [
                 'user_id' => auth()->id(),
                 'item_id' => $item_id,
@@ -116,20 +115,14 @@ class ItemController extends Controller
         return redirect($checkout_session->url);
     }
 
-    /**
-     * ステップ2: 決済成功 -> アプリに戻ってきてDB保存
-     */
     public function success(Request $request, $item_id)
     {
         $item = Item::findOrFail($item_id);
 
-        // すでにOrderがある場合は二重保存を防止
+        // 二重保存防止
         if (Order::where('item_id', $item_id)->exists()) {
              return redirect()->route('item.index');
         }
-
-        // 本来はStripeのSessionを取得してmetadataを確認するのが確実ですが、
-        // 学習用として、現在のセッションとリクエストから保存処理を行います。
         
         $address = session("address_for_item_{$item_id}") ?? [
             'postal_code' => auth()->user()->postal_code,
@@ -137,11 +130,11 @@ class ItemController extends Controller
             'building'    => auth()->user()->building,
         ];
 
-        // ここでDBに保存（元々 buy にあった処理をここに移動）
+        // 注文データの作成
         Order::create([
             'user_id' => auth()->id(),
             'item_id' => $item_id,
-            'payment_method' => 'カード払い', // Stripe経由なので
+            'payment_method' => 'カード払い',
             'postal_code' => $address['postal_code'],
             'address' => $address['address'],
             'building' => $address['building'],
@@ -155,7 +148,8 @@ class ItemController extends Controller
 
     public function create()
     {
-        $categories = Category::all(); // DBから全カテゴリー取得
+        $categories = Category::all();
+
         return view('items.create', compact('categories'));
     }
 
@@ -163,12 +157,10 @@ class ItemController extends Controller
     {
         $user = Auth::user();
         
-        // ログインしていない場合はログイン画面へ
         if (!$user) {
             return redirect()->route('login');
         }
 
-        // favoriteItems()リレーションを使って切り替え
         $user->favoriteItems()->toggle($item_id);
 
         return back();

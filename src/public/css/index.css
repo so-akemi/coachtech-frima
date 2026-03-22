@@ -1,11 +1,11 @@
 /* index.css */
-.index__content {
+.index-content {
     max-width: 1200px;
     margin: 0 auto;
     padding: 20px 0;
 }
 
-.index__tab-menu {
+.index-tab-menu {
     border-bottom: 1px solid #eeeeee;
     margin-bottom: 40px;
     padding-left: 50px;
@@ -14,8 +14,8 @@
 }
 
 /* 共通のタブスタイル */
-.index__tab-item,
-.index__tab-item--active {
+.index-tab-item,
+.index-tab-item-active {
     padding: 15px 0;
     cursor: pointer;
     font-weight: bold;
@@ -28,13 +28,13 @@
 }
 
 /* アクティブ（選択中）のスタイル */
-.index__tab-item--active {
+.index-tab-item-active {
     color: #ff4d4b;
     border-bottom: 2px solid #ff4d4b;
     /* 赤い下線 */
 }
 
-.index__product-grid {
+.index-product-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     /* 4列 */
@@ -42,16 +42,16 @@
     padding: 0 50px;
 }
 
-.index__product-card,
-.index__product-card:link,
-.index__product-card:visited,
-.index__product-card:hover,
-.index__product-card:active {
+.index-product-card,
+.index-product-card:link,
+.index-product-card:visited,
+.index-product-card:hover,
+.index-product-card:active {
     text-decoration: none;
     color: #333;
 }
 
-.index__product-image-container {
+.index-product-image-container {
     position: relative;
     aspect-ratio: 1 / 1;
     background-color: #e0e0e0;
@@ -62,24 +62,24 @@
     overflow: hidden;
 }
 
-.index__product-image {
+.index-product-image {
     width: 100%;
     height: 100%;
     object-fit: cover;
 }
 
-.index__product-name {
+.index-product-name {
     margin: 10px 0 0 0;
     font-size: 14px;
     color: #333;
     text-decoration: none;
 }
 
-.index__product-image-container span{
+.index-product-image-container span {
     color: #666;
 }
 
-.index__sold-badge {
+.index-sold-badge {
     position: absolute;
     top: 0;
     left: 0;
@@ -93,7 +93,7 @@
 }
 
 /* Soldの文字（斜めに配置） */
-.index__sold-text {
+.index-product-image-container span.index-sold-text {
     position: absolute;
     top: -55px;
     /* 三角形の中に収まるよう調整 */
